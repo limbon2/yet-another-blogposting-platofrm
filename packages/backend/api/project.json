@@ -14,7 +14,14 @@
         "outputPath": "dist/packages/backend/api",
         "main": "packages/backend/api/src/main.ts",
         "tsConfig": "packages/backend/api/tsconfig.app.json",
-        "assets": ["packages/backend/api/src/assets"],
+        "assets": [
+          "packages/backend/api/src/assets",
+          {
+            "input": "packages/common/locale/src/lib/i18n",
+            "glob": "**/*.json",
+            "output": "./i18n"
+          }
+        ],
         "isolatedConfig": true,
         "webpackConfig": "packages/backend/api/webpack.config.js"
       },

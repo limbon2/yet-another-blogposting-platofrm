@@ -1,0 +1,31 @@
+{
+  "name": "config",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/common/config/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/common/config",
+        "tsConfig": "packages/common/config/tsconfig.lib.json",
+        "packageJson": "packages/common/config/package.json",
+        "main": "packages/common/config/src/index.ts",
+        "assets": ["packages/common/config/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs config {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/common/config/**/*.ts", "packages/common/config/package.json"]
+      }
+    }
+  },
+  "tags": []
+}
