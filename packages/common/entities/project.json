@@ -1,0 +1,34 @@
+{
+  "name": "entities",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/common/entities/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/common/entities",
+        "tsConfig": "packages/common/entities/tsconfig.lib.json",
+        "packageJson": "packages/common/entities/package.json",
+        "main": "packages/common/entities/src/index.ts",
+        "assets": ["packages/common/entities/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs entities {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/common/entities/**/*.ts",
+          "packages/common/entities/package.json"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
