@@ -1,0 +1,6 @@
+{
+  "isDefined": "Field {property} must be defined",
+  "isString": "Field {property} must be of type string",
+  "isEmail": "Field {property} must a valid email address",
+  "isNotEmpty": "Field {property} must not be empty"
+}

@@ -12,5 +12,8 @@ export const backendConfig: ConfigFactory = () => {
       password: process.env.DATABASE_PASSWORD,
       name: 'postgres',
     },
+    jwt: {
+      secret: 'foobar',
+    },
   };
 };

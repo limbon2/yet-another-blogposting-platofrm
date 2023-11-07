@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AppService } from './app.service';
       imports: [ConfigModule.forRoot({ load: [backendConfig] })],
     }),
     LocaleModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

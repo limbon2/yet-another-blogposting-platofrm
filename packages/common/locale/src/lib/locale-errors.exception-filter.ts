@@ -12,12 +12,17 @@ export class LocaleHttpExceptionFilter implements ExceptionFilter {
     const i18n = I18nContext.current(host);
 
     const msgKey = `errors.${status.toString()}`;
+    const message = exception.cause
+      ? exception.message
+      : i18n?.t(msgKey, {
+          defaultValue: '[HTTP_EXCEPTION_FILTER]: Something went wrong',
+        });
 
     response.status(status).json({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: i18n?.t(msgKey, { defaultValue: '[HTTP_EXCEPTION_FILTER]: Something went wrong' }),
+      message,
     });
   }
 }

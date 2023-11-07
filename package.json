@@ -2,9 +2,13 @@
   "name": "@blogposting-platform/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "migration:create": "./node_modules/@mikro-orm/cli/cli.js migration:create -i",
+    "migration:up": "./node_modules/@mikro-orm/cli/cli.js migration:up"
+  },
   "private": true,
   "dependencies": {
+    "@mikro-orm/cli": "^5.9.2",
     "@mikro-orm/core": "^5.9.2",
     "@mikro-orm/migrations": "^5.9.2",
     "@mikro-orm/nestjs": "^5.2.2",
@@ -12,6 +16,8 @@
     "@nestjs/common": "^10.0.2",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.2",
+    "@nestjs/jwt": "^10.1.1",
+    "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/swagger": "^7.1.14",
     "@nx/nest": "^17.0.3",
@@ -19,10 +25,14 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "nestjs-i18n": "^10.3.7",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@nestjs/schematics": "^10.0.1",
@@ -39,6 +49,9 @@
     "@types/bcrypt": "^5.0.1",
     "@types/jest": "^29.4.0",
     "@types/node": "~18.7.1",
+    "@types/passport-jwt": "^3.0.12",
+    "@types/passport-local": "^1.0.37",
+    "@types/uuid": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "eslint": "~8.46.0",
@@ -54,5 +67,9 @@
   },
   "nx": {
     "includedScripts": []
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "tsConfigPath": "tsconfig.base.json"
   }
 }

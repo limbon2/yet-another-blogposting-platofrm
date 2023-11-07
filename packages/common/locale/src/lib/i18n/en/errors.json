@@ -1,0 +1,6 @@
+{
+  "500": "Server error",
+  "403": "Invalid username or password",
+  "email": "This email address is already taken",
+  "username": "This username is already taken"
+}
