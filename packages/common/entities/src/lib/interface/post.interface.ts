@@ -8,3 +8,8 @@ export interface IPost {
   updatedAt: Date;
   author?: IUser;
 }
+
+export interface ICreatePostData {
+  title: string;
+  content: string;
+}

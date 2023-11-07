@@ -27,5 +27,5 @@ export class UserEntity implements IUser {
   public updatedAt: Date = new Date();
 
   @OneToMany(() => PostEntity, (post) => post.author)
-  public posts: PostEntity[];
+  public posts?: PostEntity[];
 }

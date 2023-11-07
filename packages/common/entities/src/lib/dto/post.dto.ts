@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserDto } from '../entities';
-import { IPost } from '../interface/post.interface';
+import { ICreatePostData, IPost } from '../interface/post.interface';
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
 
 export class PostDto implements IPost {
   @ApiProperty()
@@ -20,4 +21,18 @@ export class PostDto implements IPost {
 
   @ApiPropertyOptional({ type: UserDto })
   public author?: UserDto;
+}
+
+export class CreatePostDataDto implements ICreatePostData {
+  @ApiProperty()
+  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsString({ message: 'validation.validationErrors.isString' })
+  @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
+  public title: string;
+
+  @ApiProperty()
+  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsString({ message: 'validation.validationErrors.isString' })
+  @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
+  public content: string;
 }

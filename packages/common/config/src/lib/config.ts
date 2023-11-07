@@ -17,6 +17,7 @@ export const backendConfig: ConfigFactory = () => {
     },
     elastic: {
       nodeUrl: process.env.ELASTIC_NODE_URL,
+      apiKey: process.env.ELASTIC_KEY,
     },
   };
 };

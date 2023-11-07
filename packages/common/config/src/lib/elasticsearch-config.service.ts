@@ -10,6 +10,10 @@ export class ElasticsearchConfigService implements ElasticsearchOptionsFactory {
   public createElasticsearchOptions(): ClientOptions {
     return {
       node: this.configService.getOrThrow('elastic.nodeUrl'),
+      auth: {
+        apiKey: this.configService.getOrThrow('elastic.apiKey'),
+      },
+      tls: { rejectUnauthorized: false },
     };
   }
 }
