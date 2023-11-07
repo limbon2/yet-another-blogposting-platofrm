@@ -9,3 +9,7 @@ export interface IComment {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ICreateCommentData {
+  content: string;
+}

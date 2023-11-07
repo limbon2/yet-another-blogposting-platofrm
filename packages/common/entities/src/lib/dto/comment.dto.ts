@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserDto, PostDto } from '../entities';
-import { IComment } from '../interface/comment.interface';
+import { IComment, ICreateCommentData } from '../interface/comment.interface';
+import { IsDefined, IsString, IsNotEmpty } from 'class-validator';
 
 export class CommentDto implements IComment {
   @ApiProperty()
@@ -20,4 +21,12 @@ export class CommentDto implements IComment {
 
   @ApiPropertyOptional({ type: PostDto })
   public post?: PostDto;
+}
+
+export class CreateCommentDataDto implements ICreateCommentData {
+  @ApiProperty()
+  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsString({ message: 'validation.validationErrors.isString' })
+  @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
+  public content: string;
 }
