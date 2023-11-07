@@ -15,5 +15,8 @@ export const backendConfig: ConfigFactory = () => {
     jwt: {
       secret: 'foobar',
     },
+    elastic: {
+      nodeUrl: process.env.ELASTIC_NODE_URL,
+    },
   };
 };
