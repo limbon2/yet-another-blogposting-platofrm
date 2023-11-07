@@ -1,3 +1,5 @@
+import { IPost } from './post.interface';
+
 export interface IUser {
   id: string;
   username: string;
@@ -5,4 +7,5 @@ export interface IUser {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  posts?: IPost[];
 }

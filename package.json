@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "migration:create": "./node_modules/@mikro-orm/cli/cli.js migration:create -i",
+    "migration:create": "./node_modules/@mikro-orm/cli/cli.js migration:create -n",
     "migration:up": "./node_modules/@mikro-orm/cli/cli.js migration:up"
   },
   "private": true,

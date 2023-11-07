@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IUser } from '../interface/user.interface';
+import { PostDto } from './post.dto';
 
 export class UserDto implements IUser {
   @ApiProperty()
@@ -21,4 +22,7 @@ export class UserDto implements IUser {
 
   @ApiProperty()
   public updatedAt: Date;
+
+  @ApiPropertyOptional({ type: [PostDto] })
+  public posts?: PostDto[];
 }
