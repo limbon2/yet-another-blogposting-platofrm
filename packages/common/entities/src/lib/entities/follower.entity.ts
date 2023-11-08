@@ -1,4 +1,5 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { v4 as uuid } from 'uuid';
 import { IFollower } from '../interface/follower.interface';
 import { UserEntity } from '../entities';
 
@@ -7,7 +8,7 @@ const tableName = 'followers';
 @Entity({ tableName })
 export class FollowerEntity implements IFollower {
   @PrimaryKey({ type: 'uuid' })
-  public id: string;
+  public id: string = uuid();
 
   @ManyToOne(() => UserEntity)
   public user: UserEntity;
