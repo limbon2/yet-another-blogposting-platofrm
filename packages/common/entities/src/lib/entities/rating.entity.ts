@@ -17,10 +17,10 @@ export class RatingEntity implements IRating {
   public targetId: string;
 
   @Property()
-  public createdAt: Date;
+  public createdAt: Date = new Date();
 
   @Property({ onUpdate: () => new Date() })
-  public updatedAt: Date;
+  public updatedAt: Date = new Date();
 
   @ManyToOne(() => UserEntity)
   public rater?: UserEntity;

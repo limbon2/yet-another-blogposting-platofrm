@@ -17,7 +17,7 @@ export class PostEntity implements IPost {
   public content: string;
 
   @Property({ type: 'bigint' })
-  public rating = 0;
+  public rating: number = 0;
 
   @Property()
   public createdAt: Date = new Date();

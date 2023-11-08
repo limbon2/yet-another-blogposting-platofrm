@@ -1,6 +1,6 @@
-import { Body, Controller, Get, ParseIntPipe, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { CreatePostDataDto, PostDto, UserDto } from '@blogposting-platform/entities';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { CreatePostDataDto, CreateRatingDataDto, PostDto, UserDto } from '@blogposting-platform/entities';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { PostsService } from './posts.service';
@@ -38,5 +38,20 @@ export class PostsController {
   @Post()
   public create(@Req() request: Request, @Body() data: CreatePostDataDto): Promise<PostDto> {
     return this.postsService.create(request.user as UserDto, data);
+  }
+
+  @ApiOperation({ summary: 'Increase or decrease rating of a post' })
+  @ApiParam({ name: 'postId', description: 'The id of a post to rate' })
+  @ApiBody({ type: CreateRatingDataDto })
+  @ApiOkResponse({ type: PostDto })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Put(':postId/rate')
+  public rate(
+    @Req() request: Request,
+    @Param('postId') postId: string,
+    @Body() data: CreateRatingDataDto
+  ): Promise<PostDto> {
+    return this.postsService.rate(request.user as UserDto, postId, data);
   }
 }

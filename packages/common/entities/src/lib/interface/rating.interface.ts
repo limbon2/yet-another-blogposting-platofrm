@@ -10,6 +10,5 @@ export interface IRating {
 }
 
 export interface ICreateRatingData {
-  targetId: string;
   value: number;
 }

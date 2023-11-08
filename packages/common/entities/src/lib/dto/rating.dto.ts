@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IUser } from '../entities';
-import { IRating } from '../interface/rating.interface';
+import { ICreateRatingData, IRating } from '../interface/rating.interface';
+import { IsDefined, IsInt, Max, Min } from 'class-validator';
 
 export class RatingDto implements IRating {
   @ApiProperty()
@@ -20,4 +21,13 @@ export class RatingDto implements IRating {
 
   @ApiPropertyOptional()
   public rater?: IUser;
+}
+
+export class CreateRatingDataDto implements ICreateRatingData {
+  @ApiProperty()
+  @IsDefined({ message: 'validation.validationErrors.isDefined' })
+  @IsInt()
+  @Min(-1)
+  @Max(1)
+  public value: number;
 }
