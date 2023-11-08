@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { EntityManager, EventArgs, EventSubscriber } from '@mikro-orm/core';
+import { EntityManager, EntityName, EventArgs, EventSubscriber } from '@mikro-orm/core';
 import { FollowerEntity, PostEntity } from '@blogposting-platform/entities';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { EmailService } from '../emails/email.service';
@@ -12,6 +12,10 @@ export class PostsSubscriber implements EventSubscriber<PostEntity> {
     private readonly emails: EmailService
   ) {
     this.em.getEventManager().registerSubscriber(this);
+  }
+
+  public getSubscribedEntities(): EntityName<PostEntity>[] {
+    return [PostEntity];
   }
 
   private async notifyFollowers(post: PostEntity): Promise<void> {

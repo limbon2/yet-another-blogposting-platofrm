@@ -5,11 +5,13 @@ import {
   IUser,
   PostEntity,
   RatingEntity,
+  TagEntity,
   UserEntity,
 } from '@blogposting-platform/entities';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { difference } from 'lodash';
 
 @Injectable()
 export class PostsService {
@@ -34,12 +36,29 @@ export class PostsService {
 
     if (!author) throw new BadRequestException();
 
+    const tags = await this.em.find(
+      TagEntity,
+      { nameLowerCase: { $in: data.tags.map((tagName) => tagName.toLowerCase()) } },
+      { fields: ['id', 'name', 'createdAt'] }
+    );
+    const tagNames = tags.map((tag) => tag.name);
+    const tagDiff = difference(data.tags, tagNames);
+
+    for (const newTag of tagDiff) {
+      const tag = new TagEntity();
+      tag.name = newTag;
+      tag.nameLowerCase = newTag.toLowerCase();
+      tags.push(this.em.create(TagEntity, tag));
+    }
+
     const post = new PostEntity();
     post.title = data.title;
     post.content = data.content;
     post.author = author;
+    post.tags = tags;
 
     this.em.create(PostEntity, post);
+
     await this.em.flush();
 
     return post;

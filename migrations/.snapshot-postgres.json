@@ -24,6 +24,15 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "name_lower_case": {
+          "name": "name_lower_case",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamptz(0)",
@@ -38,6 +47,24 @@
       "name": "tags",
       "schema": "public",
       "indexes": [
+        {
+          "columnNames": [
+            "name"
+          ],
+          "composite": false,
+          "keyName": "tags_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "name_lower_case"
+          ],
+          "composite": false,
+          "keyName": "tags_name_lower_case_index",
+          "primary": false,
+          "unique": false
+        },
         {
           "keyName": "tags_pkey",
           "columnNames": [
