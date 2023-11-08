@@ -1,7 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { UserDto } from '../entities';
 import { ICreatePostData, IPost } from '../interface/post.interface';
-import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { TagDto } from './tag.dto';
 
 export class PostDto implements IPost {
   @ApiProperty()
@@ -24,6 +25,9 @@ export class PostDto implements IPost {
 
   @ApiPropertyOptional({ type: UserDto })
   public author?: UserDto;
+
+  @ApiProperty({ type: [TagDto] })
+  public tags: TagDto[];
 }
 
 export class CreatePostDataDto implements ICreatePostData {
@@ -38,4 +42,13 @@ export class CreatePostDataDto implements ICreatePostData {
   @IsString({ message: 'validation.validationErrors.isString' })
   @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
   public content: string;
+
+  @ApiProperty()
+  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsArray()
+  @ArrayMinSize(2)
+  @ArrayMaxSize(16)
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
+  public tags: string[];
 }

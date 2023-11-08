@@ -1,7 +1,8 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, ManyToMany, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
 import { UserEntity } from '../entities';
+import { TagEntity } from './tag.entity';
 
 const tableName = 'posts';
 
@@ -27,4 +28,7 @@ export class PostEntity implements IPost {
 
   @ManyToOne(() => UserEntity)
   public author?: UserEntity;
+
+  @ManyToMany(() => TagEntity, (tag) => tag.posts, { eager: true, owner: true })
+  public tags: TagEntity[];
 }
