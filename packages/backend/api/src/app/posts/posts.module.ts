@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
 import { PostsSubscriber } from './posts.subscriber';
+import { EmailModule } from '../emails/email.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { PostsSubscriber } from './posts.subscriber';
       imports: [ConfigModule.forRoot({ load: [backendConfig] })],
     }),
     MikroOrmModule.forFeature([PostEntity]),
+    EmailModule,
   ],
   controllers: [PostsController],
   providers: [PostsService, PostsSubscriber],
