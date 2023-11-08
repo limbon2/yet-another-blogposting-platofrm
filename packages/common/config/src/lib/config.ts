@@ -19,5 +19,13 @@ export const backendConfig: ConfigFactory = () => {
       nodeUrl: process.env.ELASTIC_NODE_URL,
       apiKey: process.env.ELASTIC_KEY,
     },
+    smtp: {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      auth: {
+        username: process.env.SMTP_USERNAME,
+        password: process.env.SMTP_PASSWORD,
+      },
+    },
   };
 };

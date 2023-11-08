@@ -20,6 +20,11 @@
             "input": "packages/common/locale/src/lib/i18n",
             "glob": "**/*.json",
             "output": "./i18n"
+          },
+          {
+            "input": "packages/backend/api/src/app/emails/templates",
+            "glob": "**/*.handlebars",
+            "output": "./templates"
           }
         ],
         "isolatedConfig": true,

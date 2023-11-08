@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
+import { EmailModule } from './emails/email.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UsersModule } from './users/users.module';
     PostsModule,
     CommentsModule,
     UsersModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
