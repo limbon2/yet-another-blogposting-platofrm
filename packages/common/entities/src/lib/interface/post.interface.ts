@@ -4,6 +4,7 @@ export interface IPost {
   id: string;
   title: string;
   content: string;
+  rating: number;
   createdAt: Date;
   updatedAt: Date;
   author?: IUser;

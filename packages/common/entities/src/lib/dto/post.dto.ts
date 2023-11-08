@@ -14,6 +14,9 @@ export class PostDto implements IPost {
   public content: string;
 
   @ApiProperty()
+  public rating: number;
+
+  @ApiProperty()
   public createdAt: Date;
 
   @ApiProperty()
