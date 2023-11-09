@@ -598,6 +598,7 @@
             "id"
           ],
           "referencedTableName": "public.users",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         },
         "comments_post_id_foreign": {
@@ -610,6 +611,7 @@
             "id"
           ],
           "referencedTableName": "public.posts",
+          "deleteRule": "cascade",
           "updateRule": "cascade"
         }
       }

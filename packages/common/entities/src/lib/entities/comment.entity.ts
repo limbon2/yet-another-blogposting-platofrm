@@ -19,9 +19,9 @@ export class CommentEntity implements IComment {
   @Property({ onUpdate: () => new Date() })
   public updatedAt: Date = new Date();
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, { onDelete: 'set null' })
   public author?: UserEntity;
 
-  @ManyToOne(() => PostEntity)
+  @ManyToOne(() => PostEntity, { onDelete: 'cascade' })
   public post?: PostEntity;
 }
