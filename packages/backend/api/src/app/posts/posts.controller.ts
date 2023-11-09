@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CreatePostDataDto, CreateRatingDataDto, PostDto, UserDto } from '@blogposting-platform/entities';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 import { PostsService } from './posts.service';
+import { IsPostAuthorGuard } from './guards/is-post-author.guard';
+import { CurrentUser } from '../common/current-user.decorator';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -30,14 +31,24 @@ export class PostsController {
     return this.postsService.search(query);
   }
 
+  @ApiOperation({ summary: 'Remove a certain post by its id' })
+  @ApiParam({ name: 'postId', description: 'Id of a post to remove' })
+  @ApiOkResponse({ type: PostDto })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'), IsPostAuthorGuard)
+  @Delete(':postId')
+  public remove(@Param('postId') postId: string): Promise<PostDto> {
+    return this.postsService.remove(postId);
+  }
+
   @ApiOperation({ summary: 'Create a post' })
   @ApiBody({ type: CreatePostDataDto })
   @ApiOkResponse({ type: PostDto })
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  public create(@Req() request: Request, @Body() data: CreatePostDataDto): Promise<PostDto> {
-    return this.postsService.create(request.user as UserDto, data);
+  public create(@CurrentUser() user: UserDto, @Body() data: CreatePostDataDto): Promise<PostDto> {
+    return this.postsService.create(user, data);
   }
 
   @ApiOperation({ summary: 'Increase or decrease rating of a post' })
@@ -48,10 +59,10 @@ export class PostsController {
   @UseGuards(AuthGuard('jwt'))
   @Put(':postId/rate')
   public rate(
-    @Req() request: Request,
+    @CurrentUser() user: UserDto,
     @Param('postId') postId: string,
     @Body() data: CreateRatingDataDto
   ): Promise<PostDto> {
-    return this.postsService.rate(request.user as UserDto, postId, data);
+    return this.postsService.rate(user, postId, data);
   }
 }

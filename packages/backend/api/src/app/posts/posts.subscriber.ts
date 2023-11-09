@@ -40,7 +40,11 @@ export class PostsSubscriber implements EventSubscriber<PostEntity> {
   }
 
   public async afterCreate(args: EventArgs<PostEntity>): Promise<void> {
-    this.elastic.create({ id: args.entity.id, index: 'search-posts', document: args.entity });
+    await this.elastic.create({ id: args.entity.id, index: 'search-posts', document: args.entity });
     await this.notifyFollowers(args.entity);
+  }
+
+  public async afterDelete(args: EventArgs<PostEntity>): Promise<void> {
+    await this.elastic.delete({ id: args.entity.id, index: 'search-posts' });
   }
 }

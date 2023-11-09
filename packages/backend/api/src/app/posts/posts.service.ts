@@ -86,6 +86,16 @@ export class PostsService {
     return post;
   }
 
+  public async remove(postId: string): Promise<IPost> {
+    const post = await this.em.findOne(PostEntity, { id: postId });
+    if (!post) throw new BadRequestException();
+
+    this.em.remove(post);
+    await this.em.flush();
+
+    return post;
+  }
+
   public async rate(user: IUser, postId: string, data: ICreateRatingData): Promise<IPost> {
     const [rater, post, userRatings] = await Promise.all([
       this.em.findOne(UserEntity, { id: user.id }),

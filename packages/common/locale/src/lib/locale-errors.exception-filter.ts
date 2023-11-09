@@ -23,6 +23,8 @@ export class LocaleHttpExceptionFilter implements ExceptionFilter {
       timestamp: new Date().toISOString(),
       path: request.url,
       message,
+      originalMessage: exception.message,
+      stack: exception.stack?.toString(),
     });
   }
 }
