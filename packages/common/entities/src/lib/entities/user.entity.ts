@@ -20,6 +20,9 @@ export class UserEntity implements IUser {
   @Property()
   public password: string;
 
+  @Property({ type: 'bigint' })
+  public rating: number = 0;
+
   @Property({ type: 'varchar', length: 6, nullable: true })
   public code?: string;
 

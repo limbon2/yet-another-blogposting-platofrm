@@ -1,4 +1,4 @@
-import { Cascade, Entity, Formula, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Formula, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
 import { CommentEntity, UserEntity } from '../entities';
