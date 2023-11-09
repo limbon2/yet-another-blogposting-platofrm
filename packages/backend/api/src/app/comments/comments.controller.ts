@@ -1,5 +1,5 @@
 import { CommentDto, CreateCommentDataDto, CreateRatingDataDto, UserDto } from '@blogposting-platform/entities';
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from './comments.service';
@@ -52,7 +52,7 @@ export class AuthorCommentsController {
   @ApiOkResponse({ type: CommentDto })
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
-  @Post(':commentId/rate')
+  @Put(':commentId/rate')
   public rate(
     @CurrentUser() user: UserDto,
     @Param('commentId') commentId: string,
