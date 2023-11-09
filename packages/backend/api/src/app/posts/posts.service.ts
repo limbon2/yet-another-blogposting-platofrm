@@ -4,7 +4,6 @@ import {
   IPost,
   IUser,
   PostEntity,
-  RatingEntity,
   TagEntity,
   UserEntity,
 } from '@blogposting-platform/entities';
@@ -13,10 +12,15 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { difference } from 'lodash';
+import { RatingsService } from '../ratings/ratings.service';
 
 @Injectable()
 export class PostsService {
-  constructor(private readonly em: EntityManager, private readonly elastic: ElasticsearchService) {}
+  constructor(
+    private readonly em: EntityManager,
+    private readonly elastic: ElasticsearchService,
+    private readonly ratingService: RatingsService
+  ) {}
 
   @Cron(CronExpression.EVERY_DAY_AT_10PM)
   private async syncElasticWithDbPosts(): Promise<void> {
@@ -97,39 +101,6 @@ export class PostsService {
   }
 
   public async rate(user: IUser, postId: string, data: ICreateRatingData): Promise<IPost> {
-    const [rater, post, userRatings] = await Promise.all([
-      this.em.findOne(UserEntity, { id: user.id }),
-      this.em.findOne(PostEntity, { id: postId }),
-      this.em.findOne(RatingEntity, { targetId: postId, rater: { id: user.id } }),
-    ]);
-
-    if (!rater || !post) throw new BadRequestException();
-
-    post.rating = Number(post.rating);
-
-    if (userRatings) {
-      if (data.value > userRatings.value) {
-        post.rating = post.rating + 1;
-      }
-      if (data.value < userRatings.value) {
-        post.rating = post.rating - 1;
-      }
-
-      userRatings.value = data.value;
-      await this.em.upsert(RatingEntity, userRatings);
-    } else {
-      const rating = new RatingEntity();
-      rating.value = data.value;
-      rating.targetId = postId;
-      rating.rater = rater;
-
-      this.em.create(RatingEntity, rating);
-      post.rating = post.rating + rating.value;
-    }
-
-    await this.em.upsert(PostEntity, post);
-    await this.em.flush();
-
-    return post;
+    return this.ratingService.createOrUpdateRating(PostEntity, user.id, postId, data);
   }
 }

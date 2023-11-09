@@ -1,9 +1,10 @@
-import { CommentDto, CreateCommentDataDto, UserDto } from '@blogposting-platform/entities';
+import { CommentDto, CreateCommentDataDto, CreateRatingDataDto, UserDto } from '@blogposting-platform/entities';
 import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from './comments.service';
 import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from '../common/current-user.decorator';
 
 @ApiTags('Posts', 'Comments')
 @Controller('posts/:postId/comments')
@@ -36,6 +37,27 @@ export class PostCommentsController {
   }
 }
 
+// TODO: Refactor it
+/** @deprecated */
 @ApiTags('Users', 'Comments')
 @Controller('users/:userId/comments')
-export class AuthorCommentsController {}
+export class AuthorCommentsController {
+  constructor(private commentsService: CommentsService) {}
+
+  // TODO: Seems redundant and doesn't belong here. Consider moving to a separate RattingController
+  @ApiOperation({ summary: 'Rate a users comment' })
+  @ApiBody({ type: CreateRatingDataDto })
+  @ApiParam({ name: 'userId', description: 'Id of a user that left the comment', deprecated: true })
+  @ApiParam({ name: 'commentId', description: 'Id of a comment to rate' })
+  @ApiOkResponse({ type: CommentDto })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Post(':commentId/rate')
+  public rate(
+    @CurrentUser() user: UserDto,
+    @Param('commentId') commentId: string,
+    @Body() data: CreateRatingDataDto
+  ): Promise<CommentDto> {
+    return this.commentsService.rate(user, commentId, data);
+  }
+}
