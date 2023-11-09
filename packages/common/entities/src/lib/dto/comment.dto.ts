@@ -11,6 +11,9 @@ export class CommentDto implements IComment {
   public content: string;
 
   @ApiProperty()
+  public rating: number;
+
+  @ApiProperty()
   public createdAt: Date;
 
   @ApiProperty()

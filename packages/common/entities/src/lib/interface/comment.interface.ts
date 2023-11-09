@@ -4,6 +4,7 @@ import { IUser } from './user.interface';
 export interface IComment {
   id: string;
   content: string;
+  rating: number;
   author?: IUser;
   post?: IPost;
   createdAt: Date;

@@ -13,6 +13,9 @@ export class CommentEntity implements IComment {
   @Property({ type: 'text' })
   public content: string;
 
+  @Property({ type: 'bigint' })
+  public rating: number = 0;
+
   @Property()
   public createdAt: Date = new Date();
 
