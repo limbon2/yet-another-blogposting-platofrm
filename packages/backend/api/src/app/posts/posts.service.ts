@@ -24,7 +24,7 @@ export class PostsService {
     const posts = await this.em.fork().find(PostEntity, {}, { fields: ['id'] });
     const elasticPosts = await this.elastic.search<IPost>({
       index: 'search-posts',
-      query: { bool: { must: { match_all: {} }, must_not: { terms: { id: posts.map((post) => post.id) } } } },
+      query: { bool: { must: { match_all: {} }, must_not: { terms: { _id: posts.map((post) => post.id) } } } },
       size: 9999,
     });
 
@@ -50,7 +50,7 @@ export class PostsService {
   }
 
   public get(offset?: number, count?: number): Promise<IPost[]> {
-    return this.em.find(PostEntity, {}, { offset, limit: count, orderBy: { createdAt: 'DESC' } });
+    return this.em.find(PostEntity, {}, { offset, limit: count, orderBy: { createdAt: 'DESC' }, populate: ['author'] });
   }
 
   public async create(user: IUser, data: ICreatePostData): Promise<IPost> {
