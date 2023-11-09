@@ -46,4 +46,12 @@ export class AuthController {
     // TODO: Redirect to frontend app
     res.redirect(`http://localhost:3000/posts?accessToken=${user.accessToken}`);
   }
+
+  @ApiOperation({ summary: 'Resend email confirmation to specified create user' })
+  @ApiQuery({ name: 'email', description: 'Email to resend confirmation code' })
+  @ApiOkResponse({ type: Boolean })
+  @Post('resend')
+  public resendEmailConfirmation(@Query('email') email: string): Promise<boolean> {
+    return this.authService.sendEmailConfirmation(email);
+  }
 }

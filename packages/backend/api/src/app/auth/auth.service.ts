@@ -31,6 +31,28 @@ export class AuthService {
     return result;
   }
 
+  public async sendEmailConfirmation(emailOrUser: string | IUser): Promise<boolean> {
+    let user: IUser;
+
+    if (typeof emailOrUser === 'string') {
+      user = (await this.em.findOne(UserEntity, { email: emailOrUser, code: { $not: null } })) as IUser;
+      if (!user) throw new BadRequestException();
+      user.code = this.generateCode();
+      await this.em.flush();
+    } else {
+      user = emailOrUser;
+      user.code = this.generateCode();
+    }
+
+    await this.email.sendTo([user.email], 'Email confirmation', 'email-confirmation', {
+      code: user.code,
+      username: user.username,
+      link: `http://localhost:3000/api/auth/confirm?code=${user.code}`, // TODO: Add actual confirmation link
+    });
+
+    return true;
+  }
+
   public async register(data: ISignUpData): Promise<boolean> {
     const { emails, usernames } = await this.findDuplicateCount(data.email, data.username);
 
@@ -47,16 +69,11 @@ export class AuthService {
     user.email = data.email;
     user.password = bcrypt.hashSync(data.password, 12);
     user.username = data.username;
-    user.code = this.generateCode();
+
+    await this.sendEmailConfirmation(user);
 
     this.em.create(UserEntity, user);
     await this.em.flush();
-
-    await this.email.sendTo([user.email], 'Email confirmation', 'email-confirmation', {
-      code: user.code,
-      username: user.username,
-      link: `http://localhost:3000/api/auth/confirm?code=${user.code}`, // TODO: Add actual confirmation link
-    });
 
     return true;
   }
