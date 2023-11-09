@@ -1,9 +1,10 @@
 import { AuthUserDto, SignInDataDto, SignUpDataDto } from '@blogposting-platform/entities';
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBody, ApiHeader, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
+import { ApiBody, ApiHeader, ApiOkResponse, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
+import { CurrentUser } from '../common/current-user.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -15,15 +16,15 @@ export class AuthController {
   @ApiResponse({ type: AuthUserDto })
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  public me(@Req() request: Request): AuthUserDto {
-    return request.user as AuthUserDto;
+  public me(@CurrentUser() user: AuthUserDto): AuthUserDto {
+    return user;
   }
 
   @ApiOperation({ summary: 'Register a new user' })
   @ApiBody({ type: SignUpDataDto })
-  @ApiOkResponse({ type: AuthUserDto })
+  @ApiOkResponse({ type: Boolean })
   @Post('sign-up')
-  public signUp(@Body() data: SignUpDataDto): Promise<AuthUserDto> {
+  public signUp(@Body() data: SignUpDataDto): Promise<boolean> {
     return this.authService.register(data);
   }
 
@@ -32,7 +33,17 @@ export class AuthController {
   @ApiOkResponse({ type: AuthUserDto })
   @UseGuards(AuthGuard('local'))
   @Post('sign-in')
-  public signIn(@Req() request: Request): AuthUserDto {
-    return request.user as AuthUserDto;
+  public signIn(@CurrentUser() user: AuthUserDto): AuthUserDto {
+    return user;
+  }
+
+  @ApiOperation({ summary: 'Confirm user registration code' })
+  @ApiQuery({ name: 'code', description: 'Code that user code from email message' })
+  @ApiOkResponse({ type: AuthUserDto })
+  @Get('confirm')
+  public async confirm(@Query('code') code: string, @Res() res: Response): Promise<void> {
+    const user = await this.authService.confirm(code);
+    // TODO: Redirect to frontend app
+    res.redirect(`http://localhost:3000/posts?accessToken=${user.accessToken}`);
   }
 }

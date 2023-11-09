@@ -5,6 +5,7 @@ export interface IUser {
   username: string;
   email: string;
   password: string;
+  code?: string;
   createdAt: Date;
   updatedAt: Date;
   posts?: IPost[];

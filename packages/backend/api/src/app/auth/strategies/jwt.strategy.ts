@@ -1,5 +1,5 @@
 import { IAuthUser } from '@blogposting-platform/entities';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   public validate(user: IAuthUser): IAuthUser {
+    if (user.user.code) throw new UnauthorizedException();
     return user;
   }
 }
