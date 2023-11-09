@@ -8,6 +8,7 @@ import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
 import { PostsSubscriber } from './posts.subscriber';
 import { EmailModule } from '../emails/email.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { EmailModule } from '../emails/email.module';
     }),
     MikroOrmModule.forFeature([PostEntity]),
     EmailModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [PostsController],
   providers: [PostsService, PostsSubscriber],

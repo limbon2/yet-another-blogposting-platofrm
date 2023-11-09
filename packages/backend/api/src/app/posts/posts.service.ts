@@ -9,13 +9,35 @@ import {
   UserEntity,
 } from '@blogposting-platform/entities';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { difference } from 'lodash';
 
 @Injectable()
 export class PostsService {
   constructor(private readonly em: EntityManager, private readonly elastic: ElasticsearchService) {}
+
+  @Cron(CronExpression.EVERY_DAY_AT_10PM)
+  private async syncElasticWithDbPosts(): Promise<void> {
+    Logger.log('Starting elasticsearch scheduled cleanup');
+    const posts = await this.em.fork().find(PostEntity, {}, { fields: ['id'] });
+    const elasticPosts = await this.elastic.search<IPost>({
+      index: 'search-posts',
+      query: { bool: { must: { match_all: {} }, must_not: { terms: { id: posts.map((post) => post.id) } } } },
+      size: 9999,
+    });
+
+    Logger.log(`Found ${elasticPosts.hits.hits.length} posts in elasticsearch. Clearing...`);
+
+    const postIds = elasticPosts.hits.hits.map((post) => post._id);
+    await this.elastic.deleteByQuery({
+      index: 'search-posts',
+      query: { bool: { must: [{ match_all: {} }, { terms: { _id: postIds } }] } },
+    });
+
+    Logger.log(`Elasticsearch post synchronization complete. Removed ${postIds.length} number of orphaned posts`);
+  }
 
   public async search(query: string): Promise<IPost[]> {
     const result = await this.elastic.search<IPost>({
