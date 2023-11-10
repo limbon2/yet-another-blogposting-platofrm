@@ -99,8 +99,4 @@ export class PostsService {
 
     return post;
   }
-
-  public async rate(user: IUser, postId: string, data: ICreateRatingData): Promise<IPost> {
-    return this.ratingService.createOrUpdateRating(PostEntity, user.id, postId, data);
-  }
 }

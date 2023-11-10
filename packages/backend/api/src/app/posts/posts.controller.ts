@@ -1,15 +1,29 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { CreatePostDataDto, CreateRatingDataDto, PostDto, UserDto } from '@blogposting-platform/entities';
+import {
+  CreatePostDataDto,
+  CreateRatingDataDto,
+  CreateReportDataDto,
+  PostDto,
+  PostEntity,
+  ReportDto,
+  UserDto,
+} from '@blogposting-platform/entities';
 import { AuthGuard } from '@nestjs/passport';
 import { PostsService } from './posts.service';
 import { IsPostAuthorGuard } from './guards/is-post-author.guard';
 import { CurrentUser } from '../common/current-user.decorator';
+import { ReportService } from '../reports/report.service';
+import { RatingsService } from '../ratings/ratings.service';
 
 @ApiTags('Posts')
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly ratingsService: RatingsService,
+    private readonly reportService: ReportService
+  ) {}
 
   @ApiOperation({ summary: 'Get a number of posts' })
   @ApiQuery({ name: 'offset', description: 'A number representing how many posts will be skipped', required: false })
@@ -63,6 +77,21 @@ export class PostsController {
     @Param('postId') postId: string,
     @Body() data: CreateRatingDataDto
   ): Promise<PostDto> {
-    return this.postsService.rate(user, postId, data);
+    return this.ratingsService.createOrUpdateRating(PostEntity, user.id, postId, data);
+  }
+
+  @ApiOperation({ summary: 'Report a certain post for violation platform rules' })
+  @ApiParam({ name: 'postId', description: 'The id of a post to report' })
+  @ApiBody({ type: CreateReportDataDto })
+  @ApiOkResponse({ type: ReportDto })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Post(':postId/report')
+  public report(
+    @CurrentUser() user: UserDto,
+    @Param('postId') postId: string,
+    @Body() data: CreateReportDataDto
+  ): Promise<ReportDto> {
+    return this.reportService.create(PostEntity, user, postId, data);
   }
 }

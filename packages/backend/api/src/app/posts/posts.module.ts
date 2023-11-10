@@ -10,6 +10,7 @@ import { PostsSubscriber } from './posts.subscriber';
 import { EmailModule } from '../emails/email.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { RatingsModule } from '../ratings/ratings.module';
+import { ReportModule } from '../reports/report.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { RatingsModule } from '../ratings/ratings.module';
     EmailModule,
     ScheduleModule.forRoot(),
     RatingsModule,
+    ReportModule,
   ],
   controllers: [PostsController],
   providers: [PostsService, PostsSubscriber],
