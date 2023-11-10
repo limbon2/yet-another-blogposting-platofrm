@@ -44,6 +44,10 @@ export class PostsSubscriber implements EventSubscriber<PostEntity> {
     await this.notifyFollowers(args.entity);
   }
 
+  public async afterUpsert(args: EventArgs<PostEntity>): Promise<void> {
+    await this.elastic.update({ id: args.entity.id, index: 'search-posts', doc: args.entity });
+  }
+
   public async afterDelete(args: EventArgs<PostEntity>): Promise<void> {
     await this.elastic.delete({ id: args.entity.id, index: 'search-posts' });
   }
