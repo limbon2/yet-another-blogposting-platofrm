@@ -5,6 +5,7 @@ export interface IUser {
   username: string;
   email: string;
   password: string;
+  avatarUrl?: string;
   rating: number;
   code?: string;
   createdAt: Date;

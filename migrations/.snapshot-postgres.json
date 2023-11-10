@@ -117,6 +117,15 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "text"
+        },
         "rating": {
           "name": "rating",
           "type": "bigint",

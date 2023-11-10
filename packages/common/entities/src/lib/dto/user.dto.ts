@@ -17,6 +17,9 @@ export class UserDto implements IUser {
   @Exclude()
   public password: string;
 
+  @ApiPropertyOptional()
+  public avatarUrl?: string;
+
   @ApiProperty()
   public rating: number;
 
