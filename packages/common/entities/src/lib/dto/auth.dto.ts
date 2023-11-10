@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { IAuthUser, ISignInData, ISignUpData } from '../interface/auth.interface';
 import { UserDto } from '../entities';
+import 'multer';
 
 export class AuthUserDto implements IAuthUser {
   @ApiProperty()
@@ -13,12 +14,12 @@ export class AuthUserDto implements IAuthUser {
 
 export class SignInDataDto implements ISignInData {
   @ApiProperty()
-  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsDefined({ message: 'validation.validationErrors.isDefined' })
   @IsEmail({}, { message: 'validation.validationErrors.isEmail' })
   public email: string;
 
   @ApiProperty()
-  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsDefined({ message: 'validation.validationErrors.isDefined' })
   @IsString({ message: 'validation.validationErrors.isString' })
   @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
   public password: string;
@@ -26,18 +27,18 @@ export class SignInDataDto implements ISignInData {
 
 export class SignUpDataDto implements ISignUpData {
   @ApiProperty()
-  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsDefined({ message: 'validation.validationErrors.isDefined' })
   @IsString({ message: 'validation.validationErrors.isString' })
   @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
   public username: string;
 
   @ApiProperty()
-  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsDefined({ message: 'validation.validationErrors.isDefined' })
   @IsEmail({}, { message: 'validation.validationErrors.isEmail' })
   public email: string;
 
   @ApiProperty()
-  @IsDefined({ message: 'validation.validationErrors.i sDefined' })
+  @IsDefined({ message: 'validation.validationErrors.isDefined' })
   @IsString({ message: 'validation.validationErrors.isString' })
   @IsNotEmpty({ message: 'validation.validationErrors.isNotEmpty' })
   public password: string;

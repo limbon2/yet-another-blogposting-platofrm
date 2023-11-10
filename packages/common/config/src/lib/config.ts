@@ -27,5 +27,21 @@ export const backendConfig: ConfigFactory = () => {
         password: process.env.SMTP_PASSWORD,
       },
     },
+    bucket: {
+      default: process.env.STORAGE_BUCKET_DEFAULT,
+    },
+    storage: {
+      type: process.env.STORAGE_TYPE,
+      project_id: process.env.STORAGE_PROJECT_ID,
+      private_key_id: process.env.STORAGE_PRIVATE_KEY_ID,
+      private_key: process.env.STORAGE_PRIVATE_KEY,
+      client_email: process.env.STORAGE_CLIENT_EMAIL,
+      client_id: process.env.STORAGE_CLIENT_ID,
+      auth_uri: process.env.STORAGE_AUTH_URI,
+      token_uri: process.env.STORAGE_TOKEN_URI,
+      auth_provider_x509_cert_url: process.env.STORAGE_AUTH_PROVIDER_X509_CERT_URL,
+      client_x509_cert_url: process.env.STORAGE_CLIENT_X509_CERT_URL,
+      universe_domain: process.env.STORAGE_UNIVERSE_DOMAIN,
+    },
   };
 };

@@ -20,9 +20,12 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe(), new I18nValidationPipe());
   app.useGlobalFilters(new LocaleHttpExceptionFilter());
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Blog Posting API')
     .setDescription('The api documentation of a blogposting application')
+    .addBearerAuth()
     .setVersion('0.1')
     .build();
 

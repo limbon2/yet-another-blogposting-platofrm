@@ -1,10 +1,11 @@
 import { FollowerEntity, IFollower, IUser, UserEntity } from '@blogposting-platform/entities';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly em: EntityManager) {}
+  constructor(private readonly em: EntityManager, private readonly storageService: StorageService) {}
 
   public countFollowers(user: IUser): Promise<number> {
     return this.em.count(FollowerEntity, { user: { id: user.id } });
@@ -37,5 +38,21 @@ export class UsersService {
     await this.em.flush();
 
     return follower;
+  }
+
+  public async uploadAvatar(user: IUser, file: Express.Multer.File): Promise<IUser> {
+    const dbUser = await this.em.findOne(UserEntity, { id: user.id });
+    if (!dbUser) throw new BadRequestException();
+
+    const path = `users/${dbUser.id}/avatar.png`;
+
+    const uploadSuccess = await this.storageService.uploadImage(path, file, { width: 48, height: 48 });
+    if (!uploadSuccess) throw new InternalServerErrorException();
+
+    dbUser.avatarUrl = path;
+    await this.em.upsert(UserEntity, dbUser);
+    await this.em.flush();
+
+    return dbUser;
   }
 }
