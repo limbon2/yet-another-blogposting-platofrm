@@ -1,6 +1,6 @@
-import { Entity, Index, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Enum, Index, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
-import { IUser } from '../interface/user.interface';
+import { IUser, UserRole } from '../interface/user.interface';
 import { PostEntity } from './post.entity';
 
 const tableName = 'users';
@@ -19,6 +19,9 @@ export class UserEntity implements IUser {
 
   @Property()
   public password: string;
+
+  @Enum(() => UserRole)
+  public role: UserRole = UserRole.User;
 
   @Property({ type: 'text', nullable: true })
   public avatarUrl?: string;

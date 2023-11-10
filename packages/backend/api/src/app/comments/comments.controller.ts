@@ -4,7 +4,7 @@ import { Request } from 'express';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from './comments.service';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUser } from '../common/current-user.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @ApiTags('Posts', 'Comments')
 @Controller('posts/:postId/comments')

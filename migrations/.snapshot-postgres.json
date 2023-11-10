@@ -117,6 +117,21 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "'user'",
+          "enumItems": [
+            "admin",
+            "moderator",
+            "user"
+          ],
+          "mappedType": "enum"
+        },
         "avatar_url": {
           "name": "avatar_url",
           "type": "text",

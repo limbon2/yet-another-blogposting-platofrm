@@ -12,7 +12,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { PostsService } from './posts.service';
 import { IsPostAuthorGuard } from './guards/is-post-author.guard';
-import { CurrentUser } from '../common/current-user.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { ReportService } from '../reports/report.service';
 import { RatingsService } from '../ratings/ratings.service';
 

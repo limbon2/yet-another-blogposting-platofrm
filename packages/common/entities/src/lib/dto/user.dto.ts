@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { IUser } from '../interface/user.interface';
+import { IUser, UserRole } from '../interface/user.interface';
 import { PostDto } from './post.dto';
 
 export class UserDto implements IUser {
@@ -16,6 +16,9 @@ export class UserDto implements IUser {
   @ApiProperty()
   @Exclude()
   public password: string;
+
+  @ApiProperty({ enum: UserRole })
+  public role: UserRole;
 
   @ApiPropertyOptional()
   public avatarUrl?: string;

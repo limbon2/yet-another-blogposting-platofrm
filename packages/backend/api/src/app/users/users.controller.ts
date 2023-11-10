@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOkResponse, ApiOperation, ApiPa
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
-import { CurrentUser } from '../common/current-user.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 import 'multer';
 
 @ApiTags('Users')

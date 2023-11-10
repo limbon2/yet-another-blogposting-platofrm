@@ -1,5 +1,11 @@
 import { IPost } from './post.interface';
 
+export enum UserRole {
+  Admin = 'admin',
+  Moderator = 'moderator',
+  User = 'user',
+}
+
 export interface IUser {
   id: string;
   username: string;
@@ -7,6 +13,7 @@ export interface IUser {
   password: string;
   avatarUrl?: string;
   rating: number;
+  role: UserRole;
   code?: string;
   createdAt: Date;
   updatedAt: Date;
