@@ -14,6 +14,7 @@ export * from './dto/rating.dto';
 export * from './dto/follower.dto';
 export * from './dto/tag.dto';
 export * from './dto/report.dto';
+export * from './dto/email.dto';
 
 export * from './entities/user.entity';
 export * from './entities/post.entity';
@@ -31,6 +32,7 @@ export * from './interface/rating.interface';
 export * from './interface/follower.interface';
 export * from './interface/tag.interface';
 export * from './interface/report.interface';
+export * from './interface/email.interface';
 
 export const allEntities = [
   UserEntity,

@@ -25,18 +25,14 @@ export class PostsSubscriber implements EventSubscriber<PostEntity> {
 
     const followers = await em.find(FollowerEntity, { lead: { id: post.author.id } }, { populate: ['lead', 'user'] });
 
-    const promises: Promise<unknown>[] = [];
     for (const follower of followers) {
-      promises.push(
-        this.emails.sendTo([follower.user.email], `New post from ${post.author.username}`, 'post-notification', {
-          postTitle: post.title,
-          authorName: post.author.username,
-          username: follower.user.username,
-          postLink: 'https://google.com', //TODO: Add actual link to the post
-        })
-      );
+      this.emails.sendTo([follower.user.email], `New post from ${post.author.username}`, 'post-notification', {
+        postTitle: post.title,
+        authorName: post.author.username,
+        username: follower.user.username,
+        postLink: 'https://google.com', //TODO: Add actual link to the post
+      });
     }
-    await Promise.all(promises);
   }
 
   public async afterCreate(args: EventArgs<PostEntity>): Promise<void> {

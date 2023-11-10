@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "email-service",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/backend/api/src",
+  "sourceRoot": "packages/backend/email-service/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,19 +11,19 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/packages/backend/api",
-        "main": "packages/backend/api/src/main.ts",
-        "tsConfig": "packages/backend/api/tsconfig.app.json",
+        "outputPath": "dist/packages/backend/email-service",
+        "main": "packages/backend/email-service/src/main.ts",
+        "tsConfig": "packages/backend/email-service/tsconfig.app.json",
         "assets": [
-          "packages/backend/api/src/assets",
+          "packages/backend/email-service/src/assets",
           {
-            "input": "packages/common/locale/src/lib/i18n",
-            "glob": "**/*.json",
-            "output": "./i18n"
+            "input": "packages/backend/email-service/src/app/templates",
+            "glob": "**/*.handlebars",
+            "output": "./templates"
           }
         ],
         "isolatedConfig": true,
-        "webpackConfig": "packages/backend/api/webpack.config.js"
+        "webpackConfig": "packages/backend/email-service/webpack.config.js"
       },
       "configurations": {
         "development": {},
@@ -34,14 +34,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "api:build"
+        "buildTarget": "email-service:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "api:build:development"
+          "buildTarget": "email-service:build:development"
         },
         "production": {
-          "buildTarget": "api:build:production"
+          "buildTarget": "email-service:build:production"
         }
       }
     },
@@ -49,7 +49,7 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/backend/api/**/*.ts"]
+        "lintFilePatterns": ["packages/backend/email-service/**/*.ts"]
       }
     }
   },

@@ -43,5 +43,10 @@ export const backendConfig: ConfigFactory = () => {
       client_x509_cert_url: process.env.STORAGE_CLIENT_X509_CERT_URL,
       universe_domain: process.env.STORAGE_UNIVERSE_DOMAIN,
     },
+    rmq: {
+      url: process.env.RMQ_URL,
+      user: process.env.RMQ_USER,
+      password: process.env.RMQ_PASSWORD,
+    },
   };
 };
