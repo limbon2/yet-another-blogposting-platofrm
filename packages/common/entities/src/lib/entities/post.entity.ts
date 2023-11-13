@@ -1,7 +1,7 @@
 import { Entity, Formula, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
-import { CommentEntity, ReportEntity, UserEntity } from '../entities';
+import { BanEntity, CommentEntity, ReportEntity, UserEntity } from '../entities';
 import { TagEntity } from './tag.entity';
 
 const tableName = 'posts';
@@ -43,4 +43,7 @@ export class PostEntity implements IPost {
 
   @Formula((alias) => `(select count(*) from comments c where c.post_id = ${alias}.id)`)
   public commentCount: number;
+
+  @Formula((alias) => `(select * from bans b where b.target_id = ${alias}.id)`)
+  public ban?: BanEntity;
 }

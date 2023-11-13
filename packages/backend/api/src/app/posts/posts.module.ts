@@ -11,6 +11,7 @@ import { EmailModule } from '../emails/email.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { RatingsModule } from '../ratings/ratings.module';
 import { ReportModule } from '../reports/report.module';
+import { BansModule } from '../bans/bans.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ReportModule } from '../reports/report.module';
     ScheduleModule.forRoot(),
     RatingsModule,
     ReportModule,
+    BansModule,
   ],
   controllers: [PostsController],
   providers: [PostsService, PostsSubscriber],

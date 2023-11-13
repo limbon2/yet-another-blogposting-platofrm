@@ -1,12 +1,4 @@
-import {
-  ICreatePostData,
-  ICreateRatingData,
-  IPost,
-  IUser,
-  PostEntity,
-  TagEntity,
-  UserEntity,
-} from '@blogposting-platform/entities';
+import { ICreatePostData, IPost, IUser, PostEntity, TagEntity, UserEntity } from '@blogposting-platform/entities';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
@@ -54,7 +46,11 @@ export class PostsService {
   }
 
   public get(offset?: number, count?: number): Promise<IPost[]> {
-    return this.em.find(PostEntity, {}, { offset, limit: count, orderBy: { createdAt: 'DESC' }, populate: ['author'] });
+    return this.em.find(
+      PostEntity,
+      { isBanned: false },
+      { offset, limit: count, orderBy: { createdAt: 'DESC' }, populate: ['author'] }
+    );
   }
 
   public async create(user: IUser, data: ICreatePostData): Promise<IPost> {

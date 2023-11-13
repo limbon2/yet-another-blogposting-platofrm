@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
+  CreateBanDataDto,
   CreatePostDataDto,
   CreateRatingDataDto,
   CreateReportDataDto,
@@ -8,6 +9,7 @@ import {
   PostEntity,
   ReportDto,
   UserDto,
+  UserRole,
 } from '@blogposting-platform/entities';
 import { AuthGuard } from '@nestjs/passport';
 import { PostsService } from './posts.service';
@@ -15,6 +17,9 @@ import { IsPostAuthorGuard } from './guards/is-post-author.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { ReportService } from '../reports/report.service';
 import { RatingsService } from '../ratings/ratings.service';
+import { RoleGuard } from '../common/guards/role.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { BansService } from '../bans/bans.service';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -22,7 +27,8 @@ export class PostsController {
   constructor(
     private readonly postsService: PostsService,
     private readonly ratingsService: RatingsService,
-    private readonly reportService: ReportService
+    private readonly reportService: ReportService,
+    private readonly bansService: BansService
   ) {}
 
   @ApiOperation({ summary: 'Get a number of posts' })
@@ -93,5 +99,32 @@ export class PostsController {
     @Body() data: CreateReportDataDto
   ): Promise<ReportDto> {
     return this.reportService.create(PostEntity, user, postId, data);
+  }
+
+  @ApiOperation({ summary: 'Ban post and restrict user access to it' })
+  @ApiParam({ name: 'postId', description: 'The id of a post to ban' })
+  @ApiBody({ type: CreateBanDataDto })
+  @ApiOkResponse({ type: PostDto })
+  @ApiBearerAuth()
+  @Roles(UserRole.Admin, UserRole.Moderator)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
+  @Post(':postId/ban')
+  public ban(
+    @CurrentUser() user: UserDto,
+    @Param('postId') postId: string,
+    @Body() data: CreateBanDataDto
+  ): Promise<PostDto> {
+    return this.bansService.ban(PostEntity, user, postId, data);
+  }
+
+  @ApiOperation({ summary: 'Return public access to a post and unban it' })
+  @ApiParam({ name: 'postId', description: 'The id of a post to unban' })
+  @ApiOkResponse({ type: PostDto })
+  @ApiBearerAuth()
+  @Roles(UserRole.Admin, UserRole.Moderator)
+  @UseGuards(AuthGuard('jwt'), RoleGuard)
+  @Post(':postId/unban')
+  public unban(@Param('postId') postId: string): Promise<PostDto> {
+    return this.bansService.unban(PostEntity, postId);
   }
 }

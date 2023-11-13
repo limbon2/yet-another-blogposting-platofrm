@@ -17,7 +17,7 @@ export class UserEntity implements IUser {
   @Property({ unique: true })
   public email: string;
 
-  @Property()
+  @Property({ hidden: true })
   public password: string;
 
   @Enum(() => UserRole)
@@ -29,7 +29,7 @@ export class UserEntity implements IUser {
   @Property({ type: 'bigint' })
   public rating: number = 0;
 
-  @Property({ type: 'varchar', length: 6, nullable: true })
+  @Property({ type: 'varchar', length: 6, nullable: true, hidden: true })
   public code?: string;
 
   @Property()
