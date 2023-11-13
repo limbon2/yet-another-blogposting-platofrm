@@ -7,6 +7,7 @@ import { IUser } from './user.interface';
 export interface IPost extends IBannable {
   id: string;
   title: string;
+  slug: string;
   content: string;
   rating: number;
   createdAt: Date;

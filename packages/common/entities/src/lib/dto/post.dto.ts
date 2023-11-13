@@ -21,6 +21,9 @@ export class PostDto implements IPost {
   public title: string;
 
   @ApiProperty()
+  public slug: string;
+
+  @ApiProperty()
   public content: string;
 
   @ApiProperty()

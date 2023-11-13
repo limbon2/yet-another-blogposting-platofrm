@@ -19,6 +19,9 @@ export class PostEntity implements IPost {
   public title: string;
 
   @Property()
+  public slug: string;
+
+  @Property()
   public content: string;
 
   @Property({ type: 'bigint' })

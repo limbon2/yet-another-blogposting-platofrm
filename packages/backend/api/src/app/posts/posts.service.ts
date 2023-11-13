@@ -13,6 +13,7 @@ import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { difference } from 'lodash';
 import { RatingsService } from '../ratings/ratings.service';
+import slugify from 'slugify';
 
 @Injectable()
 export class PostsService {
@@ -62,9 +63,10 @@ export class PostsService {
   }
 
   public async create(user: IUser, data: ICreatePostData): Promise<IPost> {
-    const [author, community] = await Promise.all([
+    const [author, community, postCount] = await Promise.all([
       this.em.findOne(UserEntity, { id: user.id }),
       this.em.findOne(CommunityEntity, { id: data.communityId }),
+      this.em.count(PostEntity),
     ]);
 
     if (!author || (data.communityId && !community)) throw new BadRequestException();
@@ -84,8 +86,11 @@ export class PostsService {
       tags.push(this.em.create(TagEntity, tag));
     }
 
+    const slug = `${slugify(data.title, { lower: true })}-${postCount}`;
+
     const post = new PostEntity();
     post.title = data.title;
+    post.slug = slug;
     post.content = data.content;
     post.author = author;
     post.tags = tags;

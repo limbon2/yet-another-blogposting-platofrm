@@ -16,7 +16,7 @@ export class CommunitiesService {
   constructor(private readonly em: EntityManager) {}
 
   public async create(user: IUser, data: ICreateCommunityData): Promise<ICommunity> {
-    const slug = slugify(data.name);
+    const slug = slugify(data.name, { lower: true });
 
     const [creator, existingCommunity] = await Promise.all([
       this.em.findOne(UserEntity, { id: user.id }),
