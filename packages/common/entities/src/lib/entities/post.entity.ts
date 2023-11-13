@@ -1,9 +1,12 @@
 import { Entity, Formula, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
-import { BanEntity, CommentEntity, ReportEntity, UserEntity } from '../entities';
-import { TagEntity } from './tag.entity';
+import { ReportEntity } from './report.entity';
+import { BanEntity } from './ban.entity';
+import { CommentEntity } from './comment.entity';
 import { CommunityEntity } from './community.entity';
+import { TagEntity } from './tag.entity';
+import { UserEntity } from './user.entity';
 
 const tableName = 'posts';
 
@@ -48,6 +51,10 @@ export class PostEntity implements IPost {
   @Formula((alias) => `(select count(*) from comments c where c.post_id = ${alias}.id)`)
   public commentCount: number;
 
-  @Formula((alias) => `(select * from bans b where b.target_id = ${alias}.id)`)
+  @Formula((alias) => `(select * from bans b where b.target_id = ${alias}.id)`, {
+    lazy: true,
+    nullable: true,
+    type: 'jsonb',
+  })
   public ban?: BanEntity;
 }

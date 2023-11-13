@@ -1,5 +1,6 @@
 import { BanEntity } from './entities/ban.entity';
 import { CommentEntity } from './entities/comment.entity';
+import { CommunityEntity } from './entities/community.entity';
 import { FollowerEntity } from './entities/follower.entity';
 import { PostEntity } from './entities/post.entity';
 import { RatingEntity } from './entities/rating.entity';
@@ -50,5 +51,5 @@ export const allEntities = [
   TagEntity,
   ReportEntity,
   BanEntity,
-  CommentEntity,
+  CommunityEntity,
 ];

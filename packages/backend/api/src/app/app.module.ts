@@ -11,6 +11,7 @@ import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
 import { EmailModule } from './emails/email.module';
+import { CommunitiesModule } from './communities/communities.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { EmailModule } from './emails/email.module';
     CommentsModule,
     UsersModule,
     EmailModule,
+    CommunitiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

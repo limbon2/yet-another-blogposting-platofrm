@@ -1,7 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { CommunityDto, ReportDto, UserDto } from '../entities';
+import { BanDto, CommunityDto, ReportDto, UserDto } from '../entities';
 import { ICreatePostData, IPost } from '../interface/post.interface';
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsDefined,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { TagDto } from './tag.dto';
 
 export class PostDto implements IPost {
@@ -37,6 +46,9 @@ export class PostDto implements IPost {
 
   @ApiPropertyOptional({ type: CommunityDto })
   public community?: CommunityDto;
+
+  @ApiPropertyOptional({ type: BanDto })
+  public ban?: BanDto;
 }
 
 export class CreatePostDataDto implements ICreatePostData {
@@ -60,4 +72,9 @@ export class CreatePostDataDto implements ICreatePostData {
   @IsString({ each: true })
   @IsNotEmpty({ each: true })
   public tags: string[];
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsUUID()
+  public communityId?: string;
 }

@@ -1,4 +1,12 @@
-import { ICreatePostData, IPost, IUser, PostEntity, TagEntity, UserEntity } from '@blogposting-platform/entities';
+import {
+  CommunityEntity,
+  ICreatePostData,
+  IPost,
+  IUser,
+  PostEntity,
+  TagEntity,
+  UserEntity,
+} from '@blogposting-platform/entities';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
@@ -54,9 +62,12 @@ export class PostsService {
   }
 
   public async create(user: IUser, data: ICreatePostData): Promise<IPost> {
-    const author = await this.em.findOne(UserEntity, { id: user.id });
+    const [author, community] = await Promise.all([
+      this.em.findOne(UserEntity, { id: user.id }),
+      this.em.findOne(CommunityEntity, { id: data.communityId }),
+    ]);
 
-    if (!author) throw new BadRequestException();
+    if (!author || (data.communityId && !community)) throw new BadRequestException();
 
     const tags = await this.em.find(
       TagEntity,
@@ -78,6 +89,8 @@ export class PostsService {
     post.content = data.content;
     post.author = author;
     post.tags = tags;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    post.community = community!;
 
     this.em.create(PostEntity, post);
 

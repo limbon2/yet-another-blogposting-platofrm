@@ -4,7 +4,7 @@ import { IReport } from './report.interface';
 import { ITag } from './tag.interface';
 import { IUser } from './user.interface';
 
-export type IPost = IBannable & {
+export interface IPost extends IBannable {
   id: string;
   title: string;
   content: string;
@@ -16,10 +16,11 @@ export type IPost = IBannable & {
   reports?: IReport[];
   ban?: IBan;
   community?: ICommunity;
-};
+}
 
 export interface ICreatePostData {
   title: string;
   content: string;
   tags: string[];
+  communityId?: string;
 }

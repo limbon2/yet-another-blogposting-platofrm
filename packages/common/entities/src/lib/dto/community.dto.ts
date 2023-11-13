@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserDto, PostDto } from '../entities';
-import { ICommunity } from '../interface/community.interface';
+import { ICommunity, ICreateCommunityData } from '../interface/community.interface';
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
 
 export class CommunityDto implements ICommunity {
   @ApiProperty()
@@ -26,4 +27,12 @@ export class CommunityDto implements ICommunity {
 
   @ApiProperty({ type: [PostDto] })
   public posts?: PostDto[];
+}
+
+export class CreateCommunityDataDto implements ICreateCommunityData {
+  @ApiProperty()
+  @IsDefined()
+  @IsString()
+  @IsNotEmpty()
+  public name: string;
 }
