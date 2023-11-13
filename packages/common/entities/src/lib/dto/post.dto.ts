@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserDto } from '../entities';
+import { ReportDto, UserDto } from '../entities';
 import { ICreatePostData, IPost } from '../interface/post.interface';
 import { ArrayMaxSize, ArrayMinSize, IsArray, IsDefined, IsNotEmpty, IsString } from 'class-validator';
 import { TagDto } from './tag.dto';
@@ -18,6 +18,9 @@ export class PostDto implements IPost {
   public rating: number;
 
   @ApiProperty()
+  public isBanned: boolean;
+
+  @ApiProperty()
   public createdAt: Date;
 
   @ApiProperty()
@@ -28,6 +31,9 @@ export class PostDto implements IPost {
 
   @ApiProperty({ type: [TagDto] })
   public tags: TagDto[];
+
+  @ApiPropertyOptional({ type: [ReportDto] })
+  public reports?: ReportDto[];
 }
 
 export class CreatePostDataDto implements ICreatePostData {

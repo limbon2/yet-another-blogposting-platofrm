@@ -1,7 +1,7 @@
 import { Entity, Formula, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
-import { CommentEntity, UserEntity } from '../entities';
+import { CommentEntity, ReportEntity, UserEntity } from '../entities';
 import { TagEntity } from './tag.entity';
 
 const tableName = 'posts';
@@ -20,6 +20,9 @@ export class PostEntity implements IPost {
   @Property({ type: 'bigint' })
   public rating: number = 0;
 
+  @Property({ nullable: true })
+  public isBanned: boolean = false;
+
   @Property()
   public createdAt: Date = new Date();
 
@@ -34,6 +37,9 @@ export class PostEntity implements IPost {
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)
   public comments: CommentEntity[];
+
+  @Formula((alias) => `(select * from reports r where r.target_id = ${alias}.id)`, { lazy: true })
+  public reports?: ReportEntity[];
 
   @Formula((alias) => `(select count(*) from comments c where c.post_id = ${alias}.id)`)
   public commentCount: number;
