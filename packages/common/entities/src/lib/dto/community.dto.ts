@@ -11,7 +11,7 @@ export class CommunityDto implements ICommunity {
   public name: string;
 
   @ApiProperty()
-  public nameLowerCase: string;
+  public slug: string;
 
   @ApiProperty()
   public createdAt: Date;

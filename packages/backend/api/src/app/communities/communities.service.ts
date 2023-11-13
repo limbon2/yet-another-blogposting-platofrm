@@ -9,25 +9,25 @@ import {
 } from '@blogposting-platform/entities';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { kebabCase } from 'lodash';
+import slugify from 'slugify';
 
 @Injectable()
 export class CommunitiesService {
   constructor(private readonly em: EntityManager) {}
 
   public async create(user: IUser, data: ICreateCommunityData): Promise<ICommunity> {
-    const nameLowerCase = kebabCase(data.name);
+    const slug = slugify(data.name);
 
     const [creator, existingCommunity] = await Promise.all([
       this.em.findOne(UserEntity, { id: user.id }),
-      this.em.findOne(CommunityEntity, { nameLowerCase }),
+      this.em.findOne(CommunityEntity, { slug }),
     ]);
 
     if (!creator || existingCommunity) throw new BadRequestException();
 
     const community = new CommunityEntity();
     community.name = data.name;
-    community.nameLowerCase = nameLowerCase;
+    community.slug = slug;
     community.creator = creator;
 
     this.em.create(CommunityEntity, community);
@@ -40,8 +40,8 @@ export class CommunitiesService {
     return this.em.find(CommunityEntity, {}, { offset, limit: count });
   }
 
-  public async getPosts(name: string): Promise<IPost[]> {
-    const community = await this.em.findOne(CommunityEntity, { nameLowerCase: name });
+  public async getPosts(slug: string): Promise<IPost[]> {
+    const community = await this.em.findOne(CommunityEntity, { slug });
 
     if (!community) throw new BadRequestException();
 

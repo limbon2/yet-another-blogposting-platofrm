@@ -4,7 +4,7 @@ import { IUser } from './user.interface';
 export interface ICommunity {
   id: string;
   name: string;
-  nameLowerCase: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
   creator: IUser;

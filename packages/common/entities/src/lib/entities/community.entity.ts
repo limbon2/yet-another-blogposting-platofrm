@@ -15,7 +15,7 @@ export class CommunityEntity implements ICommunity {
 
   @Index()
   @Property()
-  public nameLowerCase: string;
+  public slug: string;
 
   @Property()
   public createdAt: Date = new Date();

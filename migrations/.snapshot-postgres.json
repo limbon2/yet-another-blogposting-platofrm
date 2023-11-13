@@ -504,8 +504,8 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "name_lower_case": {
-          "name": "name_lower_case",
+        "slug": {
+          "name": "slug",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -557,10 +557,10 @@
         },
         {
           "columnNames": [
-            "name_lower_case"
+            "slug"
           ],
           "composite": false,
-          "keyName": "communities_name_lower_case_index",
+          "keyName": "communities_slug_index",
           "primary": false,
           "unique": false
         },
