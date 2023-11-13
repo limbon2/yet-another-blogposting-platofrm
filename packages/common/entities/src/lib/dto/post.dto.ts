@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ReportDto, UserDto } from '../entities';
+import { CommunityDto, ReportDto, UserDto } from '../entities';
 import { ICreatePostData, IPost } from '../interface/post.interface';
 import { ArrayMaxSize, ArrayMinSize, IsArray, IsDefined, IsNotEmpty, IsString } from 'class-validator';
 import { TagDto } from './tag.dto';
@@ -34,6 +34,9 @@ export class PostDto implements IPost {
 
   @ApiPropertyOptional({ type: [ReportDto] })
   public reports?: ReportDto[];
+
+  @ApiPropertyOptional({ type: CommunityDto })
+  public community?: CommunityDto;
 }
 
 export class CreatePostDataDto implements ICreatePostData {

@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
 import { BanEntity, CommentEntity, ReportEntity, UserEntity } from '../entities';
 import { TagEntity } from './tag.entity';
+import { CommunityEntity } from './community.entity';
 
 const tableName = 'posts';
 
@@ -37,6 +38,9 @@ export class PostEntity implements IPost {
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)
   public comments: CommentEntity[];
+
+  @ManyToOne(() => CommunityEntity, { nullable: true })
+  public community?: CommunityEntity;
 
   @Formula((alias) => `(select * from reports r where r.target_id = ${alias}.id)`, { lazy: true })
   public reports?: ReportEntity[];

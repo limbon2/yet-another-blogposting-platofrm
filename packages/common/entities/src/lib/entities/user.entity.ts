@@ -1,7 +1,8 @@
-import { Entity, Enum, Index, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Enum, Index, ManyToMany, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IUser, UserRole } from '../interface/user.interface';
 import { PostEntity } from './post.entity';
+import { CommunityEntity } from './community.entity';
 
 const tableName = 'users';
 
@@ -40,4 +41,7 @@ export class UserEntity implements IUser {
 
   @OneToMany(() => PostEntity, (post) => post.author)
   public posts?: PostEntity[];
+
+  @ManyToMany(() => CommunityEntity, (community) => community.moderators, { owner: true })
+  public moderatedCommunities?: CommunityEntity[];
 }
