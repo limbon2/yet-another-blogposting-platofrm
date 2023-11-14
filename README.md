@@ -15,10 +15,10 @@ The project is still in a raw state but includes an extensive range of features 
 - Searching: Elastic search synchronization for fast post search (WIP)
 
 ## Technologies Used
-Backend: Developed primarily using Nest.js and MikroORM
-Database: PostgreSQL
-Frontend: Still in Development [React, NextJS]
-Other Technologies: RabbitMQ, Ellasticsearch (ELK), NX, Microservices, Nodemailer, monorepo, firebase
+- Backend: Developed primarily using Nest.js and MikroORM
+- Database: PostgreSQL
+- Frontend: Still in Development [React, NextJS]
+- Other Technologies: RabbitMQ, Ellasticsearch (ELK), NX, Microservices, Nodemailer, monorepo, firebase
 
 ## Getting Started [STILL UNDER DEVELOPMENT]
 1. Run ELK the way you want, like a docker or local (https://github.com/deviantony/docker-elk)
