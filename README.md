@@ -30,6 +30,7 @@ The project is still in a raw state but includes an extensive range of features 
 7. Run ``` npm run migration:up```
 8. Run ```npm run nx run entities:build```
 9. Run ```npm run nx run api:serve```
+10. Run ```npm run nx run email-service:serve```
 
 After this the app should be running and the swagger is available at http://localhost:4200/documentation
 
