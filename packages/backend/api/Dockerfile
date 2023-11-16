@@ -1,26 +1,26 @@
 FROM node:20-alpine AS builder
 
-WORKDIR /usr/app
+ARG env
 
 ARG packagejson
 
-ARG env
+WORKDIR /usr/app
 
 COPY $packagejson .
 
-RUN npm install --only=development
+RUN npm install
 
 COPY . .
 
-RUN npm run nx reset
+RUN npx nx reset
 
-RUN npm run nx run config:build
+RUN npx nx run config:build
 
-RUN npm run nx run locale:build
+RUN npx nx run locale:build
 
-RUN npm run nx run entities:build
+RUN npx nx run entities:build
 
-RUN npm run nx run api:build:production
+RUN npx nx run api:build:production
 
 FROM node:20-alpine
 

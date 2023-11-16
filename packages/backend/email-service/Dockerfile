@@ -8,19 +8,19 @@ ARG env
 
 COPY $packagejson .
 
-RUN npm install --only=development
-
 COPY . .
 
-RUN npm run nx reset
+RUN npm install
 
-RUN npm run nx run config:build
+RUN npx nx reset
 
-RUN npm run nx run locale:build
+RUN npx nx run config:build
 
-RUN npm run nx run entities:build
+RUN npx nx run locale:build
 
-RUN npm run nx run email-service:build:production
+RUN npx nx run entities:build
+
+RUN npx nx run email-service:build:production
 
 FROM node:20-alpine
 
