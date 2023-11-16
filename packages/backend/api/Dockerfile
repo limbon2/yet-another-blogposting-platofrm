@@ -28,6 +28,10 @@ ARG packagejson
 
 ARG env
 
+ARG migrations
+
+ARG mikroorm_config
+
 WORKDIR /usr/app
 
 COPY $packagejson .
@@ -36,7 +40,9 @@ RUN npm install --only=production
 
 COPY $env .env
 
-COPY ./migrations .
+COPY $mikrorm_config .
+
+COPY $migrations ./migrations
 
 COPY --from=builder /usr/app/dist ./dist
 

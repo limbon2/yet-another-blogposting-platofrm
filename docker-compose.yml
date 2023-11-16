@@ -8,6 +8,8 @@ services:
       args:
         packagejson: './package.json'
         env: './.env.docker'
+        migrations: './migrations'
+        mikroorm_config: './mikro-orm.config.js'
     restart: always
     depends_on:
       - database
