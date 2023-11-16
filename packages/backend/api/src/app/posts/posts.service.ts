@@ -11,47 +11,57 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { ConfigService } from '@nestjs/config';
 import { difference } from 'lodash';
-import { RatingsService } from '../ratings/ratings.service';
 import slugify from 'slugify';
 
 @Injectable()
 export class PostsService {
+  private readonly isProduction: boolean = this.configService.getOrThrow('env') === 'production';
+
   constructor(
     private readonly em: EntityManager,
     private readonly elastic: ElasticsearchService,
-    private readonly ratingService: RatingsService
+    private readonly configService: ConfigService
   ) {}
 
+  // TODO: Due to current production vps limitations, elasticsearch won't work
   @Cron(CronExpression.EVERY_DAY_AT_10PM)
   private async syncElasticWithDbPosts(): Promise<void> {
-    Logger.log('Starting elasticsearch scheduled cleanup');
-    const posts = await this.em.fork().find(PostEntity, {}, { fields: ['id'] });
-    const elasticPosts = await this.elastic.search<IPost>({
-      index: 'search-posts',
-      query: { bool: { must: { match_all: {} }, must_not: { terms: { _id: posts.map((post) => post.id) } } } },
-      size: 9999,
-    });
+    if (!this.isProduction) {
+      Logger.log('Starting elasticsearch scheduled cleanup');
+      const posts = await this.em.fork().find(PostEntity, {}, { fields: ['id'] });
+      const elasticPosts = await this.elastic.search<IPost>({
+        index: 'search-posts',
+        query: { bool: { must: { match_all: {} }, must_not: { terms: { _id: posts.map((post) => post.id) } } } },
+        size: 9999,
+      });
 
-    Logger.log(`Found ${elasticPosts.hits.hits.length} posts in elasticsearch. Clearing...`);
+      Logger.log(`Found ${elasticPosts.hits.hits.length} posts in elasticsearch. Clearing...`);
 
-    const postIds = elasticPosts.hits.hits.map((post) => post._id);
-    await this.elastic.deleteByQuery({
-      index: 'search-posts',
-      query: { bool: { must: [{ match_all: {} }, { terms: { _id: postIds } }] } },
-    });
+      const postIds = elasticPosts.hits.hits.map((post) => post._id);
+      await this.elastic.deleteByQuery({
+        index: 'search-posts',
+        query: { bool: { must: [{ match_all: {} }, { terms: { _id: postIds } }] } },
+      });
 
-    Logger.log(`Elasticsearch post synchronization complete. Removed ${postIds.length} number of orphaned posts`);
+      Logger.log(`Elasticsearch post synchronization complete. Removed ${postIds.length} number of orphaned posts`);
+    }
   }
 
+  // TODO: Due to current production vps limitations, elasticsearch won't work
   public async search(query: string): Promise<IPost[]> {
-    const result = await this.elastic.search<IPost>({
-      index: 'search-posts',
-      query: { multi_match: { query } },
-      filter_path: 'hits.hits._source',
-    });
+    if (!this.isProduction) {
+      const result = await this.elastic.search<IPost>({
+        index: 'search-posts',
+        query: { multi_match: { query } },
+        filter_path: 'hits.hits._source',
+      });
 
-    return result.hits.hits as unknown as IPost[];
+      return result.hits.hits as unknown as IPost[];
+    } else {
+      return this.em.find(PostEntity, { $or: [{ title: { $ilike: query } }, { content: { $ilike: query } }] });
+    }
   }
 
   public get(offset?: number, count?: number): Promise<IPost[]> {

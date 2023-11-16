@@ -19,6 +19,7 @@ import { BansModule } from '../bans/bans.module';
       useClass: ElasticsearchConfigService,
       imports: [ConfigModule.forRoot({ load: [backendConfig] })],
     }),
+    ConfigModule.forRoot({ load: [backendConfig] }),
     MikroOrmModule.forFeature([PostEntity]),
     EmailModule,
     ScheduleModule.forRoot(),

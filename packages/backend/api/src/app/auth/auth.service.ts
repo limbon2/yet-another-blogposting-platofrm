@@ -6,14 +6,18 @@ import { I18nContext, I18nService } from 'nestjs-i18n';
 import { random } from 'lodash';
 import * as bcrypt from 'bcrypt';
 import { EmailService } from '../emails/email.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
+  private readonly isProduction: boolean = this.configService.getOrThrow('env') === 'production';
+
   constructor(
     private readonly em: EntityManager,
     private readonly jwtService: JwtService,
     private readonly i18n: I18nService,
-    private readonly email: EmailService
+    private readonly email: EmailService,
+    private readonly configService: ConfigService
   ) {}
 
   private generateCode(): string {
@@ -44,7 +48,7 @@ export class AuthService {
       user.code = this.generateCode();
     }
 
-    await this.email.sendTo([user.email], 'Email confirmation', 'email-confirmation', {
+    this.email.sendTo([user.email], 'Email confirmation', 'email-confirmation', {
       code: user.code,
       username: user.username,
       link: `http://localhost:3000/api/auth/confirm?code=${user.code}`, // TODO: Add actual confirmation link
@@ -70,7 +74,10 @@ export class AuthService {
     user.password = bcrypt.hashSync(data.password, 12);
     user.username = data.username;
 
-    await this.sendEmailConfirmation(user);
+    // TODO: Due to current production vps limitations, emails won't work
+    if (!this.isProduction) {
+      await this.sendEmailConfirmation(user);
+    }
 
     this.em.create(UserEntity, user);
     await this.em.flush();

@@ -2,6 +2,7 @@ import { ConfigFactory } from '@nestjs/config';
 
 export const backendConfig: ConfigFactory = () => {
   return {
+    env: process.env.NODE_ENV,
     locale: {
       fallbackLanguage: process.env.FALLBACK_LANGUAGE,
     },
