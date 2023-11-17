@@ -44,8 +44,8 @@ export class PostsSubscriber implements EventSubscriber<PostEntity> {
 
   public async afterCreate(args: EventArgs<PostEntity>): Promise<void> {
     if (!this.isProduction) {
-      await this.elastic.create({ id: args.entity.id, index: 'search-posts', document: args.entity });
-      await this.notifyFollowers(args.entity);
+      // await this.elastic.create({ id: args.entity.id, index: 'search-posts', document: args.entity });
+      // await this.notifyFollowers(args.entity);
     }
   }
 

@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@blogposting-platform/api": ["packages/api"],
+      "@blogposting-platform/api": ["packages/api/index.ts"],
+      "@blogposting-platform/api-base": ["packages/api/base.ts"],
       "@blogposting-platform/common-components": ["packages/common/common-components/src/index.ts"],
       "@blogposting-platform/config": ["packages/common/config/src/index.ts"],
       "@blogposting-platform/entities": ["packages/common/entities/src/index.ts"],

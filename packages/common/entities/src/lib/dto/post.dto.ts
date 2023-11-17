@@ -82,5 +82,5 @@ export class CreatePostDataDto implements ICreatePostData {
   @ApiPropertyOptional()
   @IsOptional()
   @IsUUID()
-  public communityId?: string;
+  public communityId?: string | null;
 }

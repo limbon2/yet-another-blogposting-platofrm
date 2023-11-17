@@ -23,5 +23,5 @@ export interface ICreatePostData {
   title: string;
   content: string;
   tags: string[];
-  communityId?: string;
+  communityId?: string | null;
 }
