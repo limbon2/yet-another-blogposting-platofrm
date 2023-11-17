@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IUser } from '../entities';
 import { ICreateRatingData, IRating } from '../interface/rating.interface';
 import { IsDefined, IsInt, Max, Min } from 'class-validator';
+import { IUser } from '../interface/user.interface';
 
 export class RatingDto implements IRating {
   @ApiProperty()

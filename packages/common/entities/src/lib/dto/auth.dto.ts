@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { IAuthUser, ISignInData, ISignUpData } from '../interface/auth.interface';
-import { UserDto } from '../entities';
 import 'multer';
+import { UserDto } from './user.dto';
 
 export class AuthUserDto implements IAuthUser {
   @ApiProperty()
   public accessToken: string;
 
-  @ApiProperty({ type: UserDto })
+  @ApiProperty({ type: () => UserDto })
   public user: UserDto;
 }
 

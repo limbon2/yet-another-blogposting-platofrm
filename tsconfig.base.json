@@ -18,7 +18,8 @@
       "@blogposting-platform/config": ["packages/common/config/src/index.ts"],
       "@blogposting-platform/entities": ["packages/common/entities/src/index.ts"],
       "@blogposting-platform/locale": ["packages/common/locale/src/index.ts"],
-      "@blogposting-platfrom/config": ["config.ts"]
+      "@blogposting-platfrom/config": ["config.ts"],
+      "@blogposting-platform/api": ["packages/api"]
     }
   },
   "exclude": ["node_modules", "tmp"]

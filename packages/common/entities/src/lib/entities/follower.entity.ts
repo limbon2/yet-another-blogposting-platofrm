@@ -1,7 +1,7 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IFollower } from '../interface/follower.interface';
-import { UserEntity } from '../entities';
+import { UserEntity } from './user.entity';
 
 const tableName = 'followers';
 

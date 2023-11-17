@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserDto } from '../entities';
 import { IFollower } from '../interface/follower.interface';
+import { UserDto } from './user.dto';
 
 export class FollowerDto implements IFollower {
   @ApiProperty()
   public id: string;
 
-  @ApiProperty({ type: UserDto })
+  @ApiProperty({ type: () => UserDto })
   public user: UserDto;
 
-  @ApiProperty({ type: UserDto })
+  @ApiProperty({ type: () => UserDto })
   public lead: UserDto;
 
   @ApiProperty()

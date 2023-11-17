@@ -1,7 +1,8 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
 import { IComment } from '../interface/comment.interface';
-import { UserEntity, PostEntity } from '../entities';
+import { PostEntity } from './post.entity';
+import { UserEntity } from './user.entity';
 
 const tableName = 'comments';
 

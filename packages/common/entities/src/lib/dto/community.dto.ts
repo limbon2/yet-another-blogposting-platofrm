@@ -1,7 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { UserDto, PostDto } from '../entities';
-import { ICommunity, ICreateCommunityData } from '../interface/community.interface';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { PostDto } from './post.dto';
+import { ICommunity, ICreateCommunityData } from '../interface/community.interface';
+import { UserDto } from './user.dto';
 
 export class CommunityDto implements ICommunity {
   @ApiProperty()
@@ -19,13 +20,13 @@ export class CommunityDto implements ICommunity {
   @ApiProperty()
   public updatedAt: Date;
 
-  @ApiProperty({ type: UserDto })
+  @ApiProperty({ type: () => UserDto })
   public creator: UserDto;
 
-  @ApiProperty({ type: [UserDto] })
+  @ApiPropertyOptional({ type: () => [UserDto] })
   public moderators?: UserDto[];
 
-  @ApiProperty({ type: [PostDto] })
+  @ApiPropertyOptional({ type: () => [PostDto] })
   public posts?: PostDto[];
 }
 

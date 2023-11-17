@@ -7,9 +7,10 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory } from '@nestjs/core';
 import { LocaleHttpExceptionFilter } from '@blogposting-platform/locale';
+import { I18nValidationPipe } from 'nestjs-i18n';
+import * as fs from 'fs';
 
 import { AppModule } from './app/app.module';
-import { I18nValidationPipe } from 'nestjs-i18n';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -30,6 +31,8 @@ async function bootstrap() {
     .build();
 
   const doc = SwaggerModule.createDocument(app, config);
+  fs.writeFileSync('swagger.json', JSON.stringify(doc));
+
   SwaggerModule.setup('/documentation', app, doc);
 
   const port = process.env.PORT || 3000;

@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { BanDto, CommunityDto, ReportDto, UserDto } from '../entities';
 import { ICreatePostData, IPost } from '../interface/post.interface';
 import {
   ArrayMaxSize,
@@ -12,6 +11,10 @@ import {
   IsUUID,
 } from 'class-validator';
 import { TagDto } from './tag.dto';
+import { UserDto } from '../entities';
+import { BanDto } from './ban.dto';
+import { CommunityDto } from './community.dto';
+import { ReportDto } from './report.dto';
 
 export class PostDto implements IPost {
   @ApiProperty()
@@ -38,19 +41,19 @@ export class PostDto implements IPost {
   @ApiProperty()
   public updatedAt: Date;
 
-  @ApiPropertyOptional({ type: UserDto })
+  @ApiPropertyOptional({ type: () => UserDto })
   public author?: UserDto;
 
-  @ApiProperty({ type: [TagDto] })
+  @ApiProperty({ type: () => [TagDto] })
   public tags: TagDto[];
 
-  @ApiPropertyOptional({ type: [ReportDto] })
+  @ApiPropertyOptional({ type: () => [ReportDto] })
   public reports?: ReportDto[];
 
-  @ApiPropertyOptional({ type: CommunityDto })
+  @ApiPropertyOptional({ type: () => CommunityDto })
   public community?: CommunityDto;
 
-  @ApiPropertyOptional({ type: BanDto })
+  @ApiPropertyOptional({ type: () => BanDto })
   public ban?: BanDto;
 }
 

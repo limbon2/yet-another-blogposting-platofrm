@@ -12,6 +12,6 @@ export class TagDto implements ITag {
   @ApiProperty()
   public createdAt: Date;
 
-  @ApiPropertyOptional({ type: [PostDto] })
+  @ApiPropertyOptional({ type: () => [PostDto] })
   public posts?: PostDto[];
 }

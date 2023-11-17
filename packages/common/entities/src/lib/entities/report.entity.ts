@@ -1,7 +1,8 @@
 import { Entity, Enum, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
-import { UserEntity } from '../entities';
+
 import { IReport, ReportCategory } from '../interface/report.interface';
+import { UserEntity } from './user.entity';
 
 const tableName = 'reports';
 

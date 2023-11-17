@@ -12,7 +12,7 @@ export class BanDto implements IBan {
   @ApiProperty()
   public targetId: string;
 
-  @ApiProperty({ type: UserDto })
+  @ApiProperty({ type: () => UserDto })
   public bannedBy: UserDto;
 
   @ApiProperty()

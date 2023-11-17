@@ -1,5 +1,5 @@
 import { IsArray, IsDefined, IsEmail, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
-import { ISendEmailData } from '../entities';
+import { ISendEmailData } from '../interface/email.interface';
 
 export class SendEmailDataDto implements ISendEmailData {
   @IsDefined()

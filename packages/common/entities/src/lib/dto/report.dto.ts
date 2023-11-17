@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IUser } from '../entities';
 import { ICreateReportData, IReport, ReportCategory } from '../interface/report.interface';
 import { IsDefined, IsEnum, IsOptional, IsString } from 'class-validator';
+import { UserDto } from './user.dto';
 
 export class ReportDto implements IReport {
   @ApiProperty()
@@ -17,7 +17,7 @@ export class ReportDto implements IReport {
   public targetId: string;
 
   @ApiProperty()
-  public reporter?: IUser;
+  public reporter?: UserDto;
 
   @ApiProperty()
   public createdAt: Date;

@@ -1,7 +1,8 @@
 import { Entity, Index, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 as uuid } from 'uuid';
-import { UserEntity, PostEntity } from '../entities';
 import { ICommunity } from '../interface/community.interface';
+import { PostEntity } from './post.entity';
+import { UserEntity } from './user.entity';
 
 const tableName = 'communities';
 

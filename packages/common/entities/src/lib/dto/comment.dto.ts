@@ -1,7 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { UserDto, PostDto } from '../entities';
 import { IComment, ICreateCommentData } from '../interface/comment.interface';
 import { IsDefined, IsString, IsNotEmpty } from 'class-validator';
+import { PostDto } from './post.dto';
+import { UserDto } from './user.dto';
 
 export class CommentDto implements IComment {
   @ApiProperty()
@@ -19,10 +20,10 @@ export class CommentDto implements IComment {
   @ApiProperty()
   public updatedAt: Date;
 
-  @ApiPropertyOptional({ type: UserDto })
+  @ApiPropertyOptional({ type: () => UserDto })
   public author?: UserDto;
 
-  @ApiPropertyOptional({ type: PostDto })
+  @ApiPropertyOptional({ type: () => PostDto })
   public post?: PostDto;
 }
 
