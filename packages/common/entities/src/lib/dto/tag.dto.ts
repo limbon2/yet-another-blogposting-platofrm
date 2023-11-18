@@ -4,7 +4,7 @@ import { PostDto } from './post.dto';
 
 export class TagDto implements ITag {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty()
   public name: string;

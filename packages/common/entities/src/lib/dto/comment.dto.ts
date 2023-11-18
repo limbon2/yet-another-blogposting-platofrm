@@ -6,7 +6,7 @@ import { UserDto } from './user.dto';
 
 export class CommentDto implements IComment {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty()
   public content: string;

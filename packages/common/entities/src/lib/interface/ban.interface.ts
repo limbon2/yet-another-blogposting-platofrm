@@ -1,14 +1,14 @@
 import { IUser } from './user.interface';
 
 export interface IBannable {
-  id: string;
+  id: number;
   isBanned: boolean;
 }
 
 export interface IBan {
-  id: string;
+  id: number;
   reason: string;
-  targetId: string;
+  targetId: number;
   bannedBy: IUser;
   createdAt: Date;
 }

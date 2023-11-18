@@ -5,7 +5,7 @@ import { ITag } from './tag.interface';
 import { IUser } from './user.interface';
 
 export interface IPost extends IBannable {
-  id: string;
+  id: number;
   title: string;
   slug: string;
   content: string;
@@ -23,5 +23,5 @@ export interface ICreatePostData {
   title: string;
   content: string;
   tags: string[];
-  communityId?: string | null;
+  communityId?: number | null;
 }

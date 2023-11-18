@@ -114,7 +114,7 @@ export class PostsService {
     return post;
   }
 
-  public async remove(postId: string): Promise<IPost> {
+  public async remove(postId: number): Promise<IPost> {
     const post = await this.em.findOne(PostEntity, { id: postId });
     if (!post) throw new BadRequestException();
 

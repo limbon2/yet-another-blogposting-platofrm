@@ -6,10 +6,10 @@ import { BadRequestException, Injectable, Type } from '@nestjs/common';
 export class RatingsService {
   constructor(private readonly em: EntityManager) {}
 
-  public async createOrUpdateRating<T extends { id: string; rating: number; author?: IUser }>(
+  public async createOrUpdateRating<T extends { id: number; rating: number; author?: IUser }>(
     entityClass: Type<T>,
-    userId: string,
-    entityId: string,
+    userId: number,
+    entityId: number,
     data: ICreateRatingData
   ): Promise<T> {
     const [rater, entity, userRatings] = await Promise.all([

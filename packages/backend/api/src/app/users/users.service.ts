@@ -11,7 +11,7 @@ export class UsersService {
     return this.em.count(FollowerEntity, { user: { id: user.id } });
   }
 
-  public async follow(followerUser: IUser, leadId: string): Promise<IFollower> {
+  public async follow(followerUser: IUser, leadId: number): Promise<IFollower> {
     const [user, lead, existingFollower] = await Promise.all([
       this.em.findOne(UserEntity, { id: followerUser.id }),
       this.em.findOne(UserEntity, { id: leadId }),

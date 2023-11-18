@@ -4,13 +4,13 @@ import { UserDto } from './user.dto';
 
 export class BanDto implements IBan {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty()
   public reason: string;
 
   @ApiProperty()
-  public targetId: string;
+  public targetId: number;
 
   @ApiProperty({ type: () => UserDto })
   public bannedBy: UserDto;

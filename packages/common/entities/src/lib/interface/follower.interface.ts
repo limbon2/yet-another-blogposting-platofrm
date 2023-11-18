@@ -1,7 +1,7 @@
 import { IUser } from './user.interface';
 
 export interface IFollower {
-  id: string;
+  id: number;
   user: IUser;
   lead: IUser;
   createdAt: Date;

@@ -1,7 +1,7 @@
 import { IPost } from './post.interface';
 
 export interface ITag {
-  id: string;
+  id: number;
   name: string;
   createdAt: Date;
   posts?: IPost[];

@@ -9,7 +9,7 @@ export class BansService {
   public async ban<T extends IBannable>(
     entityClass: Type<T>,
     user: IUser,
-    targetId: string,
+    targetId: number,
     data: ICreateBanData
   ): Promise<T> {
     const [entity, bannedBy, existingBan] = await Promise.all([
@@ -36,7 +36,7 @@ export class BansService {
     return entity;
   }
 
-  public async unban<T extends IBannable>(entityClass: Type<T>, targetId: string): Promise<T> {
+  public async unban<T extends IBannable>(entityClass: Type<T>, targetId: number): Promise<T> {
     const [entity, ban] = await Promise.all([
       this.em.findOne(entityClass, { id: targetId }),
       this.em.findOne(BanEntity, { targetId }),

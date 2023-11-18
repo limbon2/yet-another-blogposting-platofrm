@@ -57,7 +57,7 @@ export class PostsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'), IsPostAuthorGuard)
   @Delete(':postId')
-  public remove(@Param('postId') postId: string): Promise<PostDto> {
+  public remove(@Param('postId', ParseIntPipe) postId: number): Promise<PostDto> {
     return this.postsService.remove(postId);
   }
 
@@ -80,7 +80,7 @@ export class PostsController {
   @Put(':postId/rate')
   public rate(
     @CurrentUser() user: UserDto,
-    @Param('postId') postId: string,
+    @Param('postId', ParseIntPipe) postId: number,
     @Body() data: CreateRatingDataDto
   ): Promise<PostDto> {
     return this.ratingsService.createOrUpdateRating(PostEntity, user.id, postId, data);
@@ -95,7 +95,7 @@ export class PostsController {
   @Post(':postId/report')
   public report(
     @CurrentUser() user: UserDto,
-    @Param('postId') postId: string,
+    @Param('postId', ParseIntPipe) postId: number,
     @Body() data: CreateReportDataDto
   ): Promise<ReportDto> {
     return this.reportService.create(PostEntity, user, postId, data);
@@ -111,7 +111,7 @@ export class PostsController {
   @Post(':postId/ban')
   public ban(
     @CurrentUser() user: UserDto,
-    @Param('postId') postId: string,
+    @Param('postId', ParseIntPipe) postId: number,
     @Body() data: CreateBanDataDto
   ): Promise<PostDto> {
     return this.bansService.ban(PostEntity, user, postId, data);
@@ -124,7 +124,7 @@ export class PostsController {
   @Roles(UserRole.Admin, UserRole.Moderator)
   @UseGuards(AuthGuard('jwt'), RoleGuard)
   @Post(':postId/unban')
-  public unban(@Param('postId') postId: string): Promise<PostDto> {
+  public unban(@Param('postId', ParseIntPipe) postId: number): Promise<PostDto> {
     return this.bansService.unban(PostEntity, postId);
   }
 }

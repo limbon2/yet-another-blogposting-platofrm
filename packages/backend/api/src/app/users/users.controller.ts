@@ -1,5 +1,15 @@
 import { FollowerDto, UserDto } from '@blogposting-platform/entities';
-import { Controller, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
@@ -27,7 +37,7 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Post(':userId/follow')
-  public follow(@CurrentUser() user: UserDto, @Param('userId') leadId: string): Promise<FollowerDto> {
+  public follow(@CurrentUser() user: UserDto, @Param('userId', ParseIntPipe) leadId: number): Promise<FollowerDto> {
     return this.usersService.follow(user, leadId);
   }
 

@@ -10,7 +10,7 @@ export class IsPostAuthorGuard implements CanActivate {
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const auth: IUser = request.user as IUser;
-    const postId: string = request.params['postId'];
+    const postId = Number(request.params['postId']);
 
     const user = await this.em.findOne(
       UserEntity,

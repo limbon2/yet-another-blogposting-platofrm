@@ -1,5 +1,4 @@
 import { Entity, Index, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 as uuid } from 'uuid';
 import { ICommunity } from '../interface/community.interface';
 import { PostEntity } from './post.entity';
 import { UserEntity } from './user.entity';
@@ -8,8 +7,8 @@ const tableName = 'communities';
 
 @Entity({ tableName })
 export class CommunityEntity implements ICommunity {
-  @PrimaryKey({ type: 'uuid' })
-  public id: string = uuid();
+  @PrimaryKey({ type: 'integer', autoincrement: true })
+  public id: number;
 
   @Property({ unique: true })
   public name: string;

@@ -1,9 +1,9 @@
 import { IUser } from './user.interface';
 
 export interface IRating {
-  id: string;
+  id: number;
   value: number;
-  targetId: string;
+  targetId: number;
   createdAt: Date;
   updatedAt: Date;
   rater?: IUser;

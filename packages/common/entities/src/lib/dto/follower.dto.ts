@@ -4,7 +4,7 @@ import { UserDto } from './user.dto';
 
 export class FollowerDto implements IFollower {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty({ type: () => UserDto })
   public user: UserDto;

@@ -51,13 +51,13 @@ export class PostsSubscriber implements EventSubscriber<PostEntity> {
 
   public async afterUpsert(args: EventArgs<PostEntity>): Promise<void> {
     if (!this.isProduction) {
-      await this.elastic.update({ id: args.entity.id, index: 'search-posts', doc: args.entity });
+      await this.elastic.update({ id: args.entity.id.toString(), index: 'search-posts', doc: args.entity });
     }
   }
 
   public async afterDelete(args: EventArgs<PostEntity>): Promise<void> {
     if (!this.isProduction) {
-      await this.elastic.delete({ id: args.entity.id, index: 'search-posts' });
+      await this.elastic.delete({ id: args.entity.id.toString(), index: 'search-posts' });
     }
   }
 }

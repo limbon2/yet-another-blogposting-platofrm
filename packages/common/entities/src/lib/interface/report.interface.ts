@@ -14,10 +14,10 @@ export enum ReportCategory {
 }
 
 export interface IReport {
-  id: string;
+  id: number;
   category: ReportCategory;
   text?: string;
-  targetId: string;
+  targetId: number;
   reporter?: IUser;
   createdAt: Date;
 }

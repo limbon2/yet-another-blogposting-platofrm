@@ -18,7 +18,7 @@ import { ReportDto } from './report.dto';
 
 export class PostDto implements IPost {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty()
   public title: string;
@@ -82,5 +82,5 @@ export class CreatePostDataDto implements ICreatePostData {
   @ApiPropertyOptional()
   @IsOptional()
   @IsUUID()
-  public communityId?: string | null;
+  public communityId?: number | null;
 }

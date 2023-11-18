@@ -1,6 +1,4 @@
 import { Entity, Enum, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 as uuid } from 'uuid';
-
 import { IReport, ReportCategory } from '../interface/report.interface';
 import { UserEntity } from './user.entity';
 
@@ -8,8 +6,8 @@ const tableName = 'reports';
 
 @Entity({ tableName })
 export class ReportEntity implements IReport {
-  @PrimaryKey({ type: 'uuid' })
-  public id: string = uuid();
+  @PrimaryKey({ type: 'integer', autoincrement: true })
+  public id: number;
 
   @Enum(() => ReportCategory)
   public category: ReportCategory;
@@ -18,7 +16,7 @@ export class ReportEntity implements IReport {
   public text?: string;
 
   @Property({ type: 'uuid' })
-  public targetId: string;
+  public targetId: number;
 
   @ManyToOne(() => UserEntity)
   public reporter?: UserEntity;

@@ -2,7 +2,7 @@ import { IPost } from './post.interface';
 import { IUser } from './user.interface';
 
 export interface IComment {
-  id: string;
+  id: number;
   content: string;
   rating: number;
   author?: IUser;

@@ -7,9 +7,9 @@ export class ReportService {
   constructor(private readonly em: EntityManager) {}
 
   public async create(
-    targetClass: Type<{ id: string }>,
+    targetClass: Type<{ id: number }>,
     user: IUser,
-    targetId: string,
+    targetId: number,
     data: ICreateReportData
   ): Promise<IReport> {
     const [target, reporter, existingReport] = await Promise.all([

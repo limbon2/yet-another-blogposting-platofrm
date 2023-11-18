@@ -1,5 +1,4 @@
 import { Entity, Formula, ManyToMany, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 as uuid } from 'uuid';
 import { IPost } from '../interface/post.interface';
 import { ReportEntity } from './report.entity';
 import { BanEntity } from './ban.entity';
@@ -12,8 +11,8 @@ const tableName = 'posts';
 
 @Entity({ tableName })
 export class PostEntity implements IPost {
-  @PrimaryKey({ type: 'uuid' })
-  public id: string = uuid();
+  @PrimaryKey({ type: 'integer', autoincrement: true })
+  public id: number;
 
   @Property()
   public title: string;

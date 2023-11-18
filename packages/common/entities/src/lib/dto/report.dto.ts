@@ -5,7 +5,7 @@ import { UserDto } from './user.dto';
 
 export class ReportDto implements IReport {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty({ enum: ReportCategory })
   public category: ReportCategory;
@@ -14,7 +14,7 @@ export class ReportDto implements IReport {
   public text?: string;
 
   @ApiProperty()
-  public targetId: string;
+  public targetId: number;
 
   @ApiProperty()
   public reporter?: UserDto;

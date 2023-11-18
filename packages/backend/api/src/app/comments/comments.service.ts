@@ -15,15 +15,15 @@ import { RatingsService } from '../ratings/ratings.service';
 export class CommentsService {
   constructor(private readonly em: EntityManager, private readonly ratingService: RatingsService) {}
 
-  public async findByPost(postId: string, offset?: number, count?: number): Promise<IComment[]> {
+  public async findByPost(postId: number, offset?: number, count?: number): Promise<IComment[]> {
     return this.em.find(CommentEntity, { post: { id: postId } }, { offset, limit: count });
   }
 
-  public async findByAuthor(authorId: string, offset?: number, count?: number): Promise<IComment[]> {
+  public async findByAuthor(authorId: number, offset?: number, count?: number): Promise<IComment[]> {
     return this.em.find(CommentEntity, { author: { id: authorId } }, { offset, limit: count });
   }
 
-  public async create(user: IUser, postId: string, data: ICreateCommentData): Promise<IComment> {
+  public async create(user: IUser, postId: number, data: ICreateCommentData): Promise<IComment> {
     const [author, post] = await Promise.all([
       this.em.findOne(UserEntity, { id: user.id }),
       this.em.findOne(PostEntity, { id: postId }),
@@ -42,7 +42,7 @@ export class CommentsService {
     return comment;
   }
 
-  public async rate(user: IUser, commentId: string, data: ICreateRatingData): Promise<IComment> {
+  public async rate(user: IUser, commentId: number, data: ICreateRatingData): Promise<IComment> {
     return this.ratingService.createOrUpdateRating(CommentEntity, user.id, commentId, data);
   }
 }

@@ -1,5 +1,4 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { v4 as uuid } from 'uuid';
 import { IComment } from '../interface/comment.interface';
 import { PostEntity } from './post.entity';
 import { UserEntity } from './user.entity';
@@ -8,8 +7,8 @@ const tableName = 'comments';
 
 @Entity({ tableName })
 export class CommentEntity implements IComment {
-  @PrimaryKey({ type: 'uuid' })
-  public id: string = uuid();
+  @PrimaryKey({ type: 'integer', autoincrement: true })
+  public id: number;
 
   @Property({ type: 'text' })
   public content: string;

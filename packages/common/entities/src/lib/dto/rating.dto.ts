@@ -5,13 +5,13 @@ import { IUser } from '../interface/user.interface';
 
 export class RatingDto implements IRating {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty()
   public value: number;
 
   @ApiProperty()
-  public targetId: string;
+  public targetId: number;
 
   @ApiProperty()
   public createdAt: Date;

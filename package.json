@@ -5,6 +5,8 @@
   "scripts": {
     "nx": "nx",
     "migration:create": "./node_modules/@mikro-orm/cli/cli.js migration:create -n",
+    "migration:create:empty": "./node_modules/@mikro-orm/cli/cli.js migration:create -b -n",
+    "migration:fresh": "./node_modules/@mikro-orm/cli/cli.js migration:fresh",
     "migration:up": "./node_modules/@mikro-orm/cli/cli.js migration:up",
     "generate-api": "openapi-generator-cli generate -i swagger.json -g typescript-axios -o ./packages/api --skip-validate-spec"
   },
@@ -38,6 +40,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "express-handlebars": "^7.1.2",
+    "knex-schema-inspector": "^3.1.0",
     "lodash": "^4.17.21",
     "nestjs-i18n": "^10.3.7",
     "nodemailer": "^6.9.7",

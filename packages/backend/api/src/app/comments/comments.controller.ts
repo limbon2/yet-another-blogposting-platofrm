@@ -1,5 +1,5 @@
 import { CommentDto, CreateCommentDataDto, CreateRatingDataDto, UserDto } from '@blogposting-platform/entities';
-import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from './comments.service';
@@ -17,7 +17,7 @@ export class PostCommentsController {
   @ApiQuery({ name: 'count', description: 'A number of posts to fetch', required: false })
   @ApiOkResponse({ type: [CommentDto] })
   @Get()
-  public find(@Param('postId') postId: string): Promise<CommentDto[]> {
+  public find(@Param('postId', ParseIntPipe) postId: number): Promise<CommentDto[]> {
     return this.commentsService.findByPost(postId);
   }
 
@@ -30,7 +30,7 @@ export class PostCommentsController {
   @Post()
   public create(
     @Req() request: Request,
-    @Param('postId') postId: string,
+    @Param('postId') postId: number,
     @Body() data: CreateCommentDataDto
   ): Promise<CommentDto> {
     return this.commentsService.create(request.user as UserDto, postId, data);
@@ -55,7 +55,7 @@ export class AuthorCommentsController {
   @Put(':commentId/rate')
   public rate(
     @CurrentUser() user: UserDto,
-    @Param('commentId') commentId: string,
+    @Param('commentId') commentId: number,
     @Body() data: CreateRatingDataDto
   ): Promise<CommentDto> {
     return this.commentsService.rate(user, commentId, data);

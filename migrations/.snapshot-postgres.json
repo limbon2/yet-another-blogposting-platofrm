@@ -8,12 +8,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "name": {
           "name": "name",
@@ -82,12 +82,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "username": {
           "name": "username",
@@ -220,12 +220,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "category": {
           "name": "category",
@@ -268,12 +268,12 @@
         },
         "reporter_id": {
           "name": "reporter_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "created_at": {
           "name": "created_at",
@@ -319,12 +319,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "value": {
           "name": "value",
@@ -366,12 +366,12 @@
         },
         "rater_id": {
           "name": "rater_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         }
       },
       "name": "ratings",
@@ -407,30 +407,30 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "user_id": {
           "name": "user_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "lead_id": {
           "name": "lead_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "created_at": {
           "name": "created_at",
@@ -488,12 +488,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "name": {
           "name": "name",
@@ -535,12 +535,12 @@
         },
         "creator_id": {
           "name": "creator_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         }
       },
       "name": "communities",
@@ -594,12 +594,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "title": {
           "name": "title",
@@ -670,21 +670,21 @@
         },
         "author_id": {
           "name": "author_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "community_id": {
           "name": "community_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         }
       },
       "name": "posts",
@@ -733,21 +733,21 @@
       "columns": {
         "post_entity_id": {
           "name": "post_entity_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "tag_entity_id": {
           "name": "tag_entity_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         }
       },
       "name": "posts_tags",
@@ -798,12 +798,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "content": {
           "name": "content",
@@ -846,21 +846,21 @@
         },
         "author_id": {
           "name": "author_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "post_id": {
           "name": "post_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         }
       },
       "name": "comments",
@@ -910,12 +910,12 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "reason": {
           "name": "reason",
@@ -937,12 +937,12 @@
         },
         "banned_by_id": {
           "name": "banned_by_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "created_at": {
           "name": "created_at",
@@ -988,21 +988,21 @@
       "columns": {
         "user_entity_id": {
           "name": "user_entity_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         },
         "community_entity_id": {
           "name": "community_entity_id",
-          "type": "uuid",
+          "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "uuid"
+          "mappedType": "integer"
         }
       },
       "name": "users_moderated_communities",

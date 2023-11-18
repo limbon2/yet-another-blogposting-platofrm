@@ -6,7 +6,7 @@ import { CommunityDto } from './community.dto';
 
 export class UserDto implements IUser {
   @ApiProperty()
-  public id: string;
+  public id: number;
 
   @ApiProperty()
   public username: string;
